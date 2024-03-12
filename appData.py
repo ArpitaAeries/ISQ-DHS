@@ -16,13 +16,15 @@ import os
 from pinecone import Pinecone, ServerlessSpec, PodSpec
 from transformers import RagTokenizer, RagRetriever, RagTokenForGeneration
 import pickle4 as pickle
-
+import torch
 
 os.environ['PINECONE_API_KEY'] = "37440df8-a7cb-405c-b346-e9ea5483ba03"
 os.environ['PINECONE_ENVIRONMENT'] = 'gcp-starter'
 
 pc = Pinecone(api_key=os.environ.get("PINECONE_API_KEY"))
 index = pc.Index("question-answer")
+
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 #retriever = RagRetriever.from_pretrained("facebook/rag-token-nq", index_name="exact", use_dummy_dataset=True)
  
