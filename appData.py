@@ -434,8 +434,8 @@ def get_custom_answer():
     question = data.get('Question')
     category = data.get('category')
     context = get_context(question, top_k=1)
-    answer=extract_answer(question, context)
-    return jsonify({"question": question, "answer": answer,"category":category})
+    #answer=extract_answer(question, context)
+    return jsonify({"question": question, "answer": 'answer',"category":'category',"context":context})
 
 
 
