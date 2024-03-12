@@ -3,7 +3,6 @@ from flask import Flask, request, jsonify,send_file
 
 import pandas as pd
 from sentence_transformers import SentenceTransformer, util
-import streamlit as st
 import io
 import base64
 import uuid
@@ -54,20 +53,20 @@ def create_collection():
 UPLOAD_FOLDER = 'uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-model = SentenceTransformer('all-MiniLM-L6-v2')
+# model = SentenceTransformer('all-MiniLM-L6-v2')
 
 # df = pd.read_excel('./DHS-DB-19-02-24-Q&A.xlsx')
-df = pd.read_excel('./DHS-data.xlsx')
-questions = df['Questions'].astype(str).tolist()
-answers = df['Answer'].tolist()
+# df = pd.read_excel('./DHS-data.xlsx')
+# questions = df['Questions'].astype(str).tolist()
+# answers = df['Answer'].tolist()
 
-question_embeddings = model.encode(questions, convert_to_tensor=True)
+# question_embeddings = model.encode(questions, convert_to_tensor=True)
 
-def semantic_search(query):
-    query_embedding = model.encode(query, convert_to_tensor=True)
-    similarities = util.pytorch_cos_sim(query_embedding, question_embeddings)[0]
-    most_similar_index = similarities.argmax()
-    return answers[most_similar_index]
+# def semantic_search(query):
+#     query_embedding = model.encode(query, convert_to_tensor=True)
+#     similarities = util.pytorch_cos_sim(query_embedding, question_embeddings)[0]
+#     most_similar_index = similarities.argmax()
+#     return answers[most_similar_index]
 
 def generate_unique_filename():
     return str(uuid.uuid4()) + '.xlsx'
@@ -93,71 +92,71 @@ def download_file(filename):
 
 
 
-@app.route('/upload_and_process', methods=['POST'])
-def upload_and_process():
-    if 'file' not in request.files:
-        return jsonify({'error': 'No file part'})
+# @app.route('/upload_and_process', methods=['POST'])
+# def upload_and_process():
+#     if 'file' not in request.files:
+#         return jsonify({'error': 'No file part'})
 
-    file = request.files['file']
+#     file = request.files['file']
 
-    if file.filename == '':
-        return jsonify({'error': 'No selected file'})
+#     if file.filename == '':
+#         return jsonify({'error': 'No selected file'})
 
-    if file and file.filename.endswith('.xlsx'):
-        try:
-            input_df = pd.read_excel(file)
+#     if file and file.filename.endswith('.xlsx'):
+#         try:
+#             input_df = pd.read_excel(file)
 
-            input_df['Answers'] = input_df['Questions'].astype(str).apply(semantic_search)
+#             input_df['Answers'] = input_df['Questions'].astype(str).apply(semantic_search)
 
-            filename = generate_unique_filename()
+#             filename = generate_unique_filename()
 
-            output_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            input_df.to_excel(output_path, sheet_name='Sheet1', index=False)
+#             output_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+#             input_df.to_excel(output_path, sheet_name='Sheet1', index=False)
 
-            create_collection()
-            for _, row in input_df.iterrows():
-                insert_into_db(row['Questions'], row['Answers'])
+#             create_collection()
+#             for _, row in input_df.iterrows():
+#                 insert_into_db(row['Questions'], row['Answers'])
 
-            download_link = f'/uploads/{filename}'
+#             download_link = f'/uploads/{filename}'
 
-            return jsonify({'result': input_df.to_dict(orient='records'), 'download_link': download_link})
-        except Exception as e:
-            return jsonify({'error': f'Error processing Excel file: {str(e)}'})
-    else:
-        return jsonify({'error': 'Invalid file format. Please upload an Excel file (.xlsx)'})
+#             return jsonify({'result': input_df.to_dict(orient='records'), 'download_link': download_link})
+#         except Exception as e:
+#             return jsonify({'error': f'Error processing Excel file: {str(e)}'})
+#     else:
+#         return jsonify({'error': 'Invalid file format. Please upload an Excel file (.xlsx)'})
 
-@app.route('/upload_form', methods=['POST'])
-def upload_form():
-    if 'file' not in request.files:
-        return jsonify({'error': 'No file part'})
+# @app.route('/upload_form', methods=['POST'])
+# def upload_form():
+#     if 'file' not in request.files:
+#         return jsonify({'error': 'No file part'})
 
-    file = request.files['file']
+#     file = request.files['file']
 
-    if file.filename == '':
-        return jsonify({'error': 'No selected file'})
+#     if file.filename == '':
+#         return jsonify({'error': 'No selected file'})
 
-    if file and file.filename.endswith('.xlsx'):
-        try:
-            input_df = pd.read_excel(file)
+#     if file and file.filename.endswith('.xlsx'):
+#         try:
+#             input_df = pd.read_excel(file)
 
-            input_df['Answers'] = input_df['Questions'].astype(str).apply(semantic_search)
+#             input_df['Answers'] = input_df['Questions'].astype(str).apply(semantic_search)
 
-            filename = generate_unique_filename()
+#             filename = generate_unique_filename()
 
-            output_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            input_df.to_excel(output_path, sheet_name='Sheet1', index=False)
+#             output_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+#             input_df.to_excel(output_path, sheet_name='Sheet1', index=False)
 
-            # create_collection()
-            # for _, row in input_df.iterrows():
-            #     insert_into_db(row['Questions'], row['Answers'])
+#             # create_collection()
+#             # for _, row in input_df.iterrows():
+#             #     insert_into_db(row['Questions'], row['Answers'])
 
-            download_link = f'/uploads/{filename}'
+#             download_link = f'/uploads/{filename}'
 
-            return jsonify({'result': input_df.to_dict(orient='records'), 'download_link': download_link})
-        except Exception as e:
-            return jsonify({'error': f'Error processing Excel file: {str(e)}'})
-    else:
-        return jsonify({'error': 'Invalid file format. Please upload an Excel file (.xlsx)'})
+#             return jsonify({'result': input_df.to_dict(orient='records'), 'download_link': download_link})
+#         except Exception as e:
+#             return jsonify({'error': f'Error processing Excel file: {str(e)}'})
+#     else:
+#         return jsonify({'error': 'Invalid file format. Please upload an Excel file (.xlsx)'})
 
 @app.route('/get_all_data', methods=['GET'])
 def get_all_data():
