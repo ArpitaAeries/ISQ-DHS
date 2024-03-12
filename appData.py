@@ -24,12 +24,12 @@ os.environ['PINECONE_ENVIRONMENT'] = 'gcp-starter'
 pc = Pinecone(api_key=os.environ.get("PINECONE_API_KEY"))
 index = pc.Index("question-answer")
 
-retriever = RagRetriever.from_pretrained("facebook/rag-token-nq", index_name="exact", use_dummy_dataset=True)
+#retriever = RagRetriever.from_pretrained("facebook/rag-token-nq", index_name="exact", use_dummy_dataset=True)
  
 # Load the retriever
-# with open('retriever.pkl', 'rb') as f:
-#     retriever = pickle.load(f)
-# model_name = RagTokenForGeneration.from_pretrained("facebook/rag-token-nq", retriever=retriever)
+with open('retriever.pkl', 'rb') as f:
+    retriever = pickle.load(f)
+model_name = RagTokenForGeneration.from_pretrained("facebook/rag-token-nq", retriever=retriever)
 
 # Initialize tokenizer
 tokenizer = RagTokenizer.from_pretrained("facebook/rag-token-nq")
@@ -409,6 +409,6 @@ if __name__ == '__main__':
     try:
         client.admin.command('ping')
         print("Pinged your deployment. You successfully connected to MongoDB!")
-        app.run(debug=True,port=5200)
+        app.run(debug=True)
     except Exception as e:
         print(f"Error connecting to MongoDB: {str(e)}")
