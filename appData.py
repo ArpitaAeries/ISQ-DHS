@@ -16,6 +16,7 @@ from pinecone import Pinecone, ServerlessSpec, PodSpec
 from transformers import RagTokenizer, RagRetriever, RagTokenForGeneration
 import pickle4 as pickle
 import torch
+from pprint import pprint
 
 os.environ['PINECONE_API_KEY'] = "37440df8-a7cb-405c-b346-e9ea5483ba03"
 os.environ['PINECONE_ENVIRONMENT'] = 'gcp-starter'
@@ -317,7 +318,7 @@ def update_record():
 
 
 
-def get_context(question, top_k,selected_category):
+def get_context_filtered(question, top_k,selected_category):
     # Prepare the question
     input_dict = tokenizer(question, return_tensors="pt")
     # Pass the input through the model
@@ -353,7 +354,26 @@ def get_context(question, top_k,selected_category):
 
     return c
 
-from pprint import pprint
+def get_context(question, top_k):
+    # Prepare the question
+    input_dict = tokenizer.prepare_seq2seq_batch(question, return_tensors="pt")
+    # Pass the input through the model
+    outputs = model_name(input_dict["input_ids"])
+    # Get the embeddings
+    embeddings = outputs.question_encoder_last_hidden_state
+    # Convert the tensor to a list
+    xq = embeddings.tolist()
+
+    # generate embeddings for the question
+    #xq = retriever.encode([question]).tolist()
+    # search pinecone index for context passage with the answer
+    xc = index.query(vector=xq, top_k=top_k, include_metadata=True)
+    # extract the context passage from pinecone search result
+    c = [x["metadata"]['Answers'] for x in xc["matches"]][0]
+    return c
+    #c1= [y["metadata"]['Category'] for y in xc["matches"]]
+    #c2= [z["metadata"]['Verification_Date'] for z in xc["matches"]]
+
 
 def extract_answer(question, context):
     results = []
@@ -412,7 +432,7 @@ def get_custom_answer():
     data = request.get_json()
     question = data.get('Question')
     category = data.get('category')
-    context = get_context(question, top_k=1, selected_category=category)
+    context = get_context(question, top_k=1)
     answer=extract_answer(question, context)
     return jsonify({"question": question, "answer": answer,"category":category})
 
