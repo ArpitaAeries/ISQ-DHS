@@ -370,6 +370,7 @@ def get_context(question, top_k):
     xc = index.query(vector=xq, top_k=top_k, include_metadata=True)
     # extract the context passage from pinecone search result
     c = [x["metadata"]['Answers'] for x in xc["matches"]][0]
+    print('context.........',c)
     return c
     #c1= [y["metadata"]['Category'] for y in xc["matches"]]
     #c2= [z["metadata"]['Verification_Date'] for z in xc["matches"]]
