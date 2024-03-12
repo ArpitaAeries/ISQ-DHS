@@ -412,11 +412,9 @@ def get_custom_answer():
     data = request.get_json()
     question = data.get('Question')
     category = data.get('category')
-    quarter = data.get('quarter')
-    year = data.get('year')
     context = get_context(question, top_k=1, selected_category=category)
     answer=extract_answer(question, context)
-    return jsonify({"question": question, "answer": answer,"category":category,"quarter":quarter,"year":year})
+    return jsonify({"question": question, "answer": answer,"category":category})
 
 
 
