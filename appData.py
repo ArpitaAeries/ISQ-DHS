@@ -26,11 +26,11 @@ index = pc.Index("question-answer")
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
-#retriever = RagRetriever.from_pretrained("facebook/rag-token-nq", index_name="exact", use_dummy_dataset=True)
+retriever = RagRetriever.from_pretrained("facebook/rag-token-nq", index_name="exact", use_dummy_dataset=True)
  
 # Load the retriever
-with open('retriever.pkl', 'rb') as f:
-    retriever = pickle.load(f)
+# with open('retriever.pkl', 'rb') as f:
+#     retriever = pickle.load(f)
 model_name = RagTokenForGeneration.from_pretrained("facebook/rag-token-nq", retriever=retriever)
 
 # Initialize tokenizer
