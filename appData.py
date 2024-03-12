@@ -375,8 +375,28 @@ def get_context(question, top_k):
     #c1= [y["metadata"]['Category'] for y in xc["matches"]]
     #c2= [z["metadata"]['Verification_Date'] for z in xc["matches"]]
 
-
 def extract_answer(question, context):
+    results = []
+    for c in context:
+        # Prepare the question and context
+        input_dict = tokenizer.prepare_seq2seq_batch(src_texts=question, tgt_texts=c, return_tensors="pt")
+        # Pass the input through the model
+        outputs = model_name(input_dict["input_ids"])
+        # Get the logits
+        logits = outputs.logits
+        # Convert logits to token ids
+        token_ids = torch.argmax(logits, dim=-1)
+        # Decode the token ids to get the answer
+        answer_text = tokenizer.batch_decode(token_ids, skip_special_tokens=True)[0]  # select the first element
+        # Create a dictionary for the answer and context
+        answer = {"answer": answer_text, "context": c}
+        results.append(answer)
+    # print the results
+    for result in results:
+        print(result)
+    return results
+
+def extract_answer_filtered(question, context):
     results = []
     for c in context:
         # Extract the string from the 'context' key of the dictionary
@@ -398,7 +418,6 @@ def extract_answer(question, context):
     for result in results:
         print(result)
     return results
-
 
 
 @app.route('/process_excel', methods=['POST'])
@@ -432,11 +451,9 @@ def process_excel():
 def get_custom_answer():
     data = request.get_json()
     question = data.get('Question')
-    category = data.get('category')
     context = get_context(question, top_k=1)
-    #answer=extract_answer(question, context)
-    return jsonify({"question": question, "answer": 'answer',"category":'category',"context":context})
-
+    results=extract_answer(question, context)
+    return jsonify({"question": question,"results":results,"context":context})
 
 
 if __name__ == '__main__':
