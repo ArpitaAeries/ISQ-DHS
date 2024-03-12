@@ -424,6 +424,6 @@ if __name__ == '__main__':
     try:
         client.admin.command('ping')
         print("Pinged your deployment. You successfully connected to MongoDB!")
-        app.run(debug=True)
+        app.run(debug=false, port=5000)
     except Exception as e:
         print(f"Error connecting to MongoDB: {str(e)}")
