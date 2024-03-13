@@ -1,28 +1,55 @@
 import React, { useState } from 'react'
 import Addquestion from './Addquestion'
+let basePath="https://llmusecases.aeriestechnology.com/isqapi/"
 function IsqQuestionare() {
-  let [formValue,setFormValue]=useState({quarter:'Q1',year:'2023',file:null})
+  let [formValue,setFormValue]=useState({quarter:'Q1',year:'2023',file:null,type:'Single'})
+
+  let [question,setQuestion]=useState(null)
+  let [category,setCategory]=useState(null)
+  
   let [data,setData]=useState([])
   const hangleFile = (event)=>{
     setFormValue({...formValue,file:event.target.files[0]})
   }
+
+
   const formSubmit=(event)=>{
     event.preventDefault()
     const formdata = new FormData();
-    formdata.append("file", formValue.file);
-    const requestOptions = {
-      method: "POST",
-      body: formdata
-    };
-    
-    fetch("http://127.0.0.1:5000/upload_form", requestOptions)
-      .then((response) => response.json())
-      .then((res) => {
-        let modifiedData = res.result.map(item => ({ ...item, isAccepted: false }));
-        setData(modifiedData)
-      })
-      .catch((error) => console.error(error));
+    if(formValue.type=='Bulk'){
+      let path=basePath+'process_excel'
+      formdata.append("file", formValue.file);
+      const requestOptions = {
+        method: "POST",
+        body: formdata
+      };
+      
+      fetch(path, requestOptions)
+        .then((response) => response.json())
+        .then((res) => {
+          let modifiedData = res.result.map(item => ({ ...item, isAccepted: false }));
+          setData(modifiedData)
+        })
+        .catch((error) => console.error(error));
+    }else{
+      let path=basePath+'get_custom_answer'
+      formdata.append("Question", question);
+      formdata.append("productType", category);
+      const requestOptions = {
+        method: "POST",
+        body: formdata
+      };
+      
+      fetch(path, requestOptions)
+        .then((response) => response.json())
+        .then((res) => {
+          let modifiedData = res.result.map(item => ({ ...item, isAccepted: false }));
+          setData(modifiedData)
+        })
+        .catch((error) => console.error(error));
+    }
   }
+  
 
   const onAccept=(arg)=>{
     console.log(arg)
@@ -80,10 +107,25 @@ function IsqQuestionare() {
       });
 
   }
+
+  const handleQuestion=(val)=>{
+    setQuestion(val)
+  }
+
+  const handleProductType=(val)=>{
+    setCategory(val)
+  }
   return (
     <>
       <form onSubmit={formSubmit}>
         <div className='formControls'>
+        <div className='formControl'>
+            <label>Select Type</label>
+            <select value={formValue.type} onChange={(e)=>setFormValue({...formValue,type:e.target.value})}>
+              <option value={'Single'}>Single</option>
+              <option value={'Bulk'}>Bulk</option>
+            </select>
+          </div>
           <div className='formControl'>
             <label>Select Quarter</label>
             <select value={formValue.quarter} onChange={(e)=>setFormValue({...formValue,quarter:e.target.value})}>
@@ -102,15 +144,17 @@ function IsqQuestionare() {
               <option value={'2021'}>2021</option>
             </select>
           </div>
+          {formValue.type=='Bulk' ?
           <div className='formControl'>
             <input type='file' onChange={(e)=>hangleFile(e)}/>
-          </div>
+          </div>:
+           <Addquestion question={handleQuestion} productType={handleProductType}/>
+           }
           <div className=''>
             <button type='submit'>Submit</button>
           </div>
         </div>
       </form>
-      <Addquestion />
       <div>
       { data.length!==0 &&
         <table>

@@ -5,15 +5,19 @@ import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Chip from '@mui/material/Chip';
 
-const Addquestion = () => {
+const Addquestion = ({question}) => {
   const [questionValue, setQuestionValue] = useState([]);
   const [categoryValue, setCategoryValue] = useState([]);
 
-  const questions = ['What is your name?', 'How are you?', 'What is the capital of France?']; // Add your questions
-  const categories = ['General', 'Technology', 'Science', 'Travel']; // Add your categories
+  const questions = ['Does the vendor maintain any formal security policies &  How often is the vendor’s security posture reviewed?', 
+  'Will the vendor provide a copy of their last two security audit, penetration test, and/or vulnerability assessment?',
+   'Are there current connections or servers that will need decommissioning once your new environment has moved to full production?',
+  'If cloud solution, does the vendor use a third-party storage solution?If yes, does the data storage vendor have any third- party certifications or attestations, such as FedRamp, FIPS 140 -2,FISMA and DIACAP, HIPAA, ISO 27001, PCI-DSS, TRUSTe or SOC 1/SOC 2/ SSAE 16/ISAE 3402? If yes, provide certification or attestations'];
+  
+  
+  const categories = ['eS One DevOps', 'Perform Platform', 'eS One Product Owner', 'Gemini','Corporate InfoSec'];
 
   const handleApiCall = () => {
-    // Replace the following with your actual API call logic using questionValue and categoryValue
     console.log('API Call with Questions:', questionValue, 'and Categories:', categoryValue);
   };
 
@@ -23,12 +27,15 @@ const Addquestion = () => {
     <Grid container spacing={2}>
       <Grid item xs={12} sm={6}>
         <Autocomplete
-          multiple
+          
           id="question-autocomplete"
           size="small"
           options={questions}
           value={questionValue}
-          onChange={(_, newValue) => setQuestionValue(newValue)}
+          onChange={(_, newValue) => {
+            setQuestionValue(newValue) 
+            question(newValue)
+          }}
           freeSolo
           getOptionLabel={getOptionLabel}
           renderTags={(value, getTagProps) =>
@@ -49,7 +56,7 @@ const Addquestion = () => {
               {...params}
               variant="standard"
               label="Question"
-              placeholder="Favorites"
+              placeholder="Question"
             />
           )}
         />
@@ -57,7 +64,7 @@ const Addquestion = () => {
 
       <Grid item xs={12} sm={6}>
         <Autocomplete
-          multiple
+          
           id="category-autocomplete"
           size="small"
           options={categories}
@@ -82,20 +89,14 @@ const Addquestion = () => {
             <TextField
               {...params}
               variant="standard"
-              label="Category"
-              placeholder="Favorites"
+              label="Product Type"
+              placeholder="Product Type"
             />
           )}
         />
-      </Grid>
-
-      <Grid item xs={12}>
-        <Button variant="contained" color="primary" onClick={handleApiCall}>
-          Call API
-        </Button>
       </Grid>
     </Grid>
   );
 };
 
-export default YourComponent;
+export default Addquestion;

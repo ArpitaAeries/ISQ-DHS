@@ -84,14 +84,12 @@ def get_data():
 
 @app.route('/')
 def hello_world():
-    return 'Hello, World!'
+    return 'Your API service has started'
 
 @app.route('/download/<filename>')
 def download_file(filename):
     file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
     return send_file(file_path, as_attachment=True)
-
-
 
 # @app.route('/upload_and_process', methods=['POST'])
 # def upload_and_process():
@@ -429,17 +427,17 @@ def process_excel():
 
     if file.filename.endswith('.xls') or file.filename.endswith('.xlsx'):
         df = pd.read_excel(file)
-        if 'question_column' not in df.columns or 'category_column' not in df.columns:
+        if 'Question' not in df.columns or 'Product' not in df.columns:
             return jsonify({"error": "Missing required columns in the Excel file"}), 400
 
         result = []
         for _, row in df.iterrows():
-            question = row['question_column']
-            category = row['category_column']
+            question = row['Question']
+            product = row['Product']
 
-            context = get_context(question, top_k=1, selected_category=category)
-            answer=extract_answer(question, context)
-            result.append({"question": question, "answer": answer})
+            context = get_context(question, top_k=1)
+            results=extract_answer(question, context)
+            result.append({"question": question, "answer": results[0].answer,"context":context,"productType":product})
 
         return jsonify({"result": result})
 
@@ -449,11 +447,16 @@ def process_excel():
 
 @app.route('/get_custom_answer', methods=['POST'])
 def get_custom_answer():
-    data = request.get_json()
-    question = data.get('Question')
-    context = get_context(question, top_k=1)
-    results=extract_answer(question, context)
-    return jsonify({"question": question,"results":results,"context":context})
+    try:
+        data = request.get_json()
+        question = data.get('Question')
+        productType = data.get('productType')
+        context = get_context(question, top_k=1)
+        results=extract_answer(question, context)
+        return jsonify({"question": question,"answer":results[0].answer,"context":context,"productType":productType})
+    
+    except Exception as e:
+        return jsonify({'error': f'Error updating record: {str(e)}'})
 
 
 if __name__ == '__main__':
