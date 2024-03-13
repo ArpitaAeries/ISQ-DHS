@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+let basePath="https://llmusecases.aeriestechnology.com/isqapi/"
 
 const style = {
   position: 'absolute',
@@ -99,7 +100,7 @@ function ModelData() {
 
   }
   const loadData=async()=>{
-    await fetch("http://127.0.0.1:5000/get_all_data")
+    await fetch(basePath+"get_all_data")
     .then((response) => response.json())
     .then((res) => {
       setData(res.data)
@@ -163,16 +164,46 @@ function ModelData() {
           handleClose() 
     }
 
-    const extractQuarterYear = (data) => {
-      const answers = [];
+    // const extractQuarterYear = (data) => {
+    //   const answers = [];
+    
+    //   for (const key in data) {
+    //     if (/^Q\d{5}$/.test(key) && data[key]) {
+    //       answers.push(`<strong>${key}</strong>:${data[key]}</br>`);
+    //     }
+    //   }
+    
+    //   return answers.join('');
+    // };
+
+    const extractLatestQuarterYear = (data) => {
+      const quarters = [];
     
       for (const key in data) {
-        if (/^Q\d{5}$/.test(key) && data[key]) {
-          answers.push(`<strong>${key}</strong>:${data[key]}</br>`);
+        if (/^Q(\d{1})(\d{4})$/.test(key) && data[key]) {
+          const quarter = parseInt(RegExp.$1);
+          const year = parseInt(RegExp.$2);
+    
+          quarters.push({ key, quarter, year });
         }
       }
     
-      return answers.join('');
+      if (quarters.length === 0) {
+        return ''; // No valid quarters found
+      }
+    
+      // Sort quarters by year and quarter in descending order
+      quarters.sort((a, b) => {
+        if (a.year !== b.year) {
+          return b.year - a.year;
+        } else {
+          return b.quarter - a.quarter;
+        }
+      });
+    
+      const latestQuarter = quarters[0];
+    
+      return `<strong>${latestQuarter.key}</strong>:${data[latestQuarter.key]}</br>`;
     };
 
     const [newfilteredData, setNewFilteredData] = useState(data);
@@ -185,7 +216,7 @@ function ModelData() {
       setNewFilteredData(filtered);
     }
     const handleNewSearch = (searchTerm) => {
-      const filtered = filteredData.filter(item =>
+      const filtered = filteredData?.filter(item =>
         item?.Question.toLowerCase().includes(searchTerm.toLowerCase())
       );
       setNew1FilteredData(filtered);
@@ -223,7 +254,7 @@ function ModelData() {
         </div>
       </form>
       <div>
-      { filteredData.length!==0 ?
+      { filteredData?.length!==0 ?
         <>
         <div>
           <input type="text" placeholder="Search by question" onChange={(e) => handleNewSearch(e.target.value)} style={{maxWidth:'300px',float:'right'}}/>
@@ -266,7 +297,7 @@ function ModelData() {
               <tr key={index}>
                 <td>{item.Question}</td>
                 {/* <td>{extractQuarterYear(item)}</td> */}
-                <td dangerouslySetInnerHTML={{ __html: extractQuarterYear(item) }} />
+                <td dangerouslySetInnerHTML={{ __html: extractLatestQuarterYear(item) }} />
                 <td>{item.verifiedON}</td>
                 <td><button onClick={()=>openPopUp(item)}>Modify</button></td>
               </tr>

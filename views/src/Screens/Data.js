@@ -14,11 +14,11 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
-
+let basePath="https://llmusecases.aeriestechnology.com/isqapi/"
 function Data() {
     let [data,setData]=useState([])
     const loadData=()=>{
-      fetch("http://127.0.0.1:5000/get_initial_data")
+      fetch(basePath+"get_initial_data")
       .then((response) => response.json())
       .then((res) => {
           setData(res)

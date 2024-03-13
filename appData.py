@@ -24,7 +24,12 @@ os.environ['PINECONE_ENVIRONMENT'] = 'gcp-starter'
 pc = Pinecone(api_key=os.environ.get("PINECONE_API_KEY"))
 index = pc.Index("question-answer")
 
-device = 'cuda' if torch.cuda.is_available() else 'cpu'
+# Check if CUDA (GPU support) is available
+if torch.cuda.is_available():
+    # Select GPU device 0
+    device = torch.device('cuda:0')
+else:
+    device = torch.device('cpu')
 
 retriever = RagRetriever.from_pretrained("facebook/rag-token-nq", index_name="exact", use_dummy_dataset=True)
  

@@ -43,7 +43,7 @@ const SideMenu = () => {
               Verfied Questionare
             </Link>
           </li>
-          <li style={{ padding: '10px' }}>
+          {/* <li style={{ padding: '10px' }}>
             <Link
               to="/data"
               style={{
@@ -54,7 +54,7 @@ const SideMenu = () => {
             >
               Data
             </Link>
-          </li>
+          </li> */}
         </ul>
       </nav>
     </aside>
