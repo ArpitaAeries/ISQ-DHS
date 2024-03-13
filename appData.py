@@ -389,9 +389,6 @@ def extract_answer(question, context):
         # Create a dictionary for the answer and context
         answer = {"answer": answer_text, "context": c}
         results.append(answer)
-    # print the results
-    for result in results:
-        print(result)
     return results
 
 def extract_answer_filtered(question, context):
@@ -437,7 +434,7 @@ def process_excel():
 
             context = get_context(question, top_k=1)
             results=extract_answer(question, context)
-            result.append({"question": question, "answer": results[0].answer,"context":context,"productType":product})
+            result.append({"question": question, "answer": results,"context":context,"productType":product})
 
         return jsonify({"result": result})
 
@@ -453,7 +450,7 @@ def get_custom_answer():
         productType = data.get('productType')
         context = get_context(question, top_k=1)
         results=extract_answer(question, context)
-        return jsonify({"question": question,"answer":results[0].answer,"context":context,"productType":productType})
+        return jsonify({"question": question,"answer":results,"context":context,"productType":productType})
     
     except Exception as e:
         return jsonify({'error': f'Error updating record: {str(e)}'})
