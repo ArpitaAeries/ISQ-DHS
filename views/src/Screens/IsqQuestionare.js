@@ -33,17 +33,22 @@ function IsqQuestionare() {
         .catch((error) => console.error(error));
     }else{
       let path=basePath+'get_custom_answer'
-      formdata.append("Question", question);
-      formdata.append("productType", category);
+      let data={
+        "Question":question,
+        "productType":category
+      }
       const requestOptions = {
         method: "POST",
-        body: formdata
+        body: JSON.stringify(data),
+        headers:{
+          'Content-Type': 'application/json',
+        }
       };
       
       fetch(path, requestOptions)
         .then((response) => response.json())
         .then((res) => {
-          let modifiedData = res.result.map(item => ({ ...item, isAccepted: false }));
+          let modifiedData = [res].map(item => ({ ...item, isAccepted: false }));
           setData(modifiedData)
         })
         .catch((error) => console.error(error));
@@ -52,12 +57,12 @@ function IsqQuestionare() {
   
 
   const onAccept=(arg)=>{
-    console.log(arg)
     const parm = {
-      "Question": arg.Questions,
+      "Question": arg.question,
       "quarter": formValue.quarter,
       "year": formValue.year,
-      "Answer":arg.Answers
+      "answer":arg.answer[0]?.answer,
+      "productType":arg.productType
     };
     const requestOptions = {
       method: "POST",
@@ -67,7 +72,7 @@ function IsqQuestionare() {
       body: JSON.stringify(parm)
     };
     
-    fetch("http://127.0.0.1:5000/accept", requestOptions)
+    fetch(basePath+"accept", requestOptions)
       .then((response) => response.json())
       .then((res) => {
         const updatedData = data.map(item => 
@@ -161,13 +166,17 @@ function IsqQuestionare() {
           <tr>
             <th>Question</th>
             <th>Answer</th>
+            <th>Product Type</th>
+            <th>Context</th>
             <th>Action</th>
           </tr>
           {
             data?.map((item,index)=>(
               <tr key={index}>
-                <td>{item.Questions}</td>
-                <td>{item.Answers}</td>
+                <td>{item.question}</td>
+                <td>{item?.answer[0]?.answer}</td>
+                <td>{item?.productType}</td>
+                <td>{item?.context}</td>
                 <td>
                   {item.isAccepted?
                     <button onClick={()=>onReject(item)}>Reject</button>:

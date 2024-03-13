@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Chip from '@mui/material/Chip';
 
-const Addquestion = ({question}) => {
+const Addquestion = ({question,productType}) => {
   const [questionValue, setQuestionValue] = useState([]);
   const [categoryValue, setCategoryValue] = useState([]);
 
@@ -69,7 +69,10 @@ const Addquestion = ({question}) => {
           size="small"
           options={categories}
           value={categoryValue}
-          onChange={(_, newValue) => setCategoryValue(newValue)}
+          onChange={(_, newValue) =>{
+             setCategoryValue(newValue)
+             productType(newValue)
+          }}
           freeSolo
           getOptionLabel={getOptionLabel}
           renderTags={(value, getTagProps) =>

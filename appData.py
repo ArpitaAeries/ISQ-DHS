@@ -224,7 +224,8 @@ def accept():
         question = data.get('Question')
         quarter = data.get('quarter')
         year = data.get('year')
-        answer = data.get('Answer')
+        answer = data.get('answer')
+        productType = data.get('productType')
 
         new_column = quarter + year
         existing_document = db.isqQuestions.find_one({'Question': question})
@@ -236,7 +237,7 @@ def accept():
             )
             return jsonify({'message': f'Document with question "{question}" updated successfully'})
         else:
-            db.isqQuestions.insert_one({'Question': question, new_column: answer, 'verifiedON': datetime.now().strftime('%Y-%m-%d')})
+            db.isqQuestions.insert_one({'Question': question, new_column: answer,'productType':productType, 'verifiedON': datetime.now().strftime('%Y-%m-%d')})
             return jsonify({'message': 'New document inserted successfully'})
     except Exception as e:
         return jsonify({'error': f'Error processing data: {str(e)}'})
