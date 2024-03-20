@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import Addquestion from './Addquestion'
+import Loading from '../components/Loading'
 let basePath="https://llmusecases.aeriestechnology.com/isqapi/"
 function IsqQuestionare() {
   let [formValue,setFormValue]=useState({quarter:'Q1',year:'2023',file:null,type:'Single'})
-
+  let [loader,setLoader]=useState(false)
   let [question,setQuestion]=useState(null)
   let [category,setCategory]=useState(null)
 
@@ -18,6 +19,7 @@ function IsqQuestionare() {
   const formSubmit=(event)=>{
     event.preventDefault()
     const formdata = new FormData();
+    setLoader(true)
     if(formValue.type=='Bulk'){
       let path=basePath+'process_excel'
       formdata.append("file", formValue.file);
@@ -31,8 +33,10 @@ function IsqQuestionare() {
         .then((res) => {
           let modifiedData = res.result.map(item => ({ ...item, isAccepted: false }));
           setData(modifiedData)
+          setLoader(false)
         })
-        .catch((error) => console.error(error));
+        .catch((error) => {console.error(error)  
+          setLoader(false)});
     }else{
       let path=basePath+'get_custom_answer'
       let data={
@@ -52,9 +56,13 @@ function IsqQuestionare() {
         .then((res) => {
           let modifiedData = [res].map(item => ({ ...item, isAccepted: false }));
           setData(modifiedData)
+          setLoader(false)
         })
-        .catch((error) => console.error(error));
-    }
+        .catch((error) => {
+          console.error(error)
+          setLoader(false)
+        });
+    } 
   }
   
 
@@ -63,8 +71,9 @@ function IsqQuestionare() {
       "Question": arg.question,
       "quarter": formValue.quarter,
       "year": formValue.year,
-      "answer":arg.answer[0]?.answer,
-      "productType":arg.productType
+      // "answer":arg.answer[0]?.answer,
+      "answer":arg.context,
+      "productType":arg.productType,
     };
     const requestOptions = {
       method: "POST",
@@ -124,6 +133,7 @@ function IsqQuestionare() {
   }
   return (
     <>
+      {loader && <Loading/>}
       <form onSubmit={formSubmit}>
         <div className='formControls'>
         <div className='formControl'>
@@ -167,16 +177,16 @@ function IsqQuestionare() {
         <table>
           <tr>
             <th>Question</th>
-            <th>Answer</th>
+            {/* <th>Answer</th> */}
             <th>Product Type</th>
-            <th>Context</th>
+            <th>Answer</th>
             <th>Action</th>
           </tr>
           {
             data?.map((item,index)=>(
               <tr key={index}>
                 <td>{item.question}</td>
-                <td>{item?.answer[0]?.answer}</td>
+                {/* <td>{item?.answer[0]?.answer}</td> */}
                 <td>{item?.productType}</td>
                 <td>{item?.context}</td>
                 <td>
