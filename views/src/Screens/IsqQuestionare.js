@@ -6,6 +6,8 @@ function IsqQuestionare() {
 
   let [question,setQuestion]=useState(null)
   let [category,setCategory]=useState(null)
+
+  const categories = ['eS One DevOps', 'Perform Platform', 'eS One Product Owner', 'Gemini','Corporate InfoSec'];
   
   let [data,setData]=useState([])
   const hangleFile = (event)=>{

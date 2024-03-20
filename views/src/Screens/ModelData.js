@@ -15,12 +15,16 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
+const categories = ['eS One DevOps', 'Perform Platform', 'eS One Product Owner', 'Gemini','Corporate InfoSec'];
 
 function ModelData() {
-  let [formValue,setFormValue]=useState({quarter:null,year:null,file:null})
+  let [formValue,setFormValue]=useState({quarter:'Q1',year:'2024',file:null,productType:'eS One DevOps'})
   let [data,setData]=useState([])
-  let [filteredData,setFilteredData]=useState([])
+  let [filteredData,setFilteredData]=useState(false)
   let [selectedQy,setSelectedQy]=useState([])
+
+  const [newfilteredData, setNewFilteredData] = useState(data);
+  const [new1filteredData, setNew1FilteredData] = useState(data);
   const hangleFile = (event)=>{
     setFormValue({...formValue,file:event.target.files[0]})
   }
@@ -30,9 +34,12 @@ function ModelData() {
     let filterData= data.filter(obj => {
         return Object.keys(obj).some(key => key.includes(newKey));
       });
+
+    let filteredProductTypeData=filterData.filter(obj=>obj.productType==formValue.productType)
+    console.log(filterData,filteredProductTypeData)
       setSelectedQy(newKey)
-      setFilteredData(filterData)
-      setNew1FilteredData(filterData)
+      setFilteredData(true)
+      setNew1FilteredData(filteredProductTypeData)
   }
   const loadAfterUpdate=()=>{
     let newKey=formValue.quarter+formValue.year
@@ -147,7 +154,7 @@ function ModelData() {
           body: JSON.stringify(parm)
         };
         
-        fetch("http://127.0.0.1:5000/update_record", requestOptions)
+        fetch(basePath+"update_record", requestOptions)
           .then((response) => response.json())
           .then(async(res) => {
             // const updatedData =  data.map(item => 
@@ -206,8 +213,6 @@ function ModelData() {
       return `<strong>${latestQuarter.key}</strong>:${data[latestQuarter.key]}</br>`;
     };
 
-    const [newfilteredData, setNewFilteredData] = useState(data);
-    const [new1filteredData, setNew1FilteredData] = useState(data);
 
     const handleSearch = (searchTerm) => {
       const filtered = data.filter(item =>
@@ -228,7 +233,6 @@ function ModelData() {
           <div className='formControl'>
             <label>Select Quarter</label>
             <select value={formValue.quarter} onChange={(e)=>setFormValue({...formValue,quarter:e.target.value})}>
-              <option value={null}>Select</option>
               <option value={'Q1'}>Q1</option>
               <option value={'Q2'}>Q2</option>
               <option value={'Q3'}>Q3</option>
@@ -238,11 +242,18 @@ function ModelData() {
           <div className='formControl'>
           <label>Select Year</label>
             <select value={formValue.year} onChange={(e)=>setFormValue({...formValue,year:e.target.value})}>
-            <option value={null}>Select</option>
             <option value={'2024'}>2024</option>
               <option value={'2023'}>2023</option>
               <option value={'2022'}>2022</option>
               <option value={'2021'}>2021</option>
+            </select>
+          </div>
+          <div className='formControl'>
+          <label>Product Type</label>
+            <select value={formValue.productType} onChange={(e)=>setFormValue({...formValue,productType:e.target.value})}>
+              {categories.map((item,index)=>(
+              <option key={index} value={item}>{item}</option>
+              ))}
             </select>
           </div>
           {/* <div className='formControl'>
@@ -254,7 +265,7 @@ function ModelData() {
         </div>
       </form>
       <div>
-      { filteredData?.length!==0 ?
+      { filteredData?
         <>
         <div>
           <input type="text" placeholder="Search by question" onChange={(e) => handleNewSearch(e.target.value)} style={{maxWidth:'300px',float:'right'}}/>
@@ -263,6 +274,7 @@ function ModelData() {
           <tr>
             <th>Question</th>
             <th>Answer({selectedQy})</th>
+            <th>Product Type</th>
             <th>Verfied On</th>
             <th>Modify</th>
             {/* <th>Action</th> */}
@@ -272,6 +284,7 @@ function ModelData() {
               <tr key={index}>
                 <td>{item.Question}</td>
                 <td>{item[selectedQy]}</td>
+                <td>{item.productType}</td>
                 <td>{item.verifiedON}</td>
                 <td><button onClick={()=>openPopUp(item)}>Modify</button></td>
               </tr>
@@ -288,6 +301,7 @@ function ModelData() {
           <tr>
             <th>Question</th>
             <th>Answer</th>
+            <th>Product Type</th>
             <th>Verfied On</th>
             <th>Modify</th>
             {/* <th>Action</th> */}
@@ -298,6 +312,7 @@ function ModelData() {
                 <td>{item.Question}</td>
                 {/* <td>{extractQuarterYear(item)}</td> */}
                 <td dangerouslySetInnerHTML={{ __html: extractLatestQuarterYear(item) }} />
+                <td>{item.productType}</td>
                 <td>{item.verifiedON}</td>
                 <td><button onClick={()=>openPopUp(item)}>Modify</button></td>
               </tr>
