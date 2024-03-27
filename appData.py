@@ -231,7 +231,8 @@ def accept():
         year = data.get('year')
         answer = data.get('answer')
         productType = data.get('productType')
-        Date=data.get('Date')
+        date=data.get('date')
+        dataSteward=data.get('dataSteward')
 
         new_column = quarter + year
         existing_document = db.isqQuestions.find_one({'Question': question})
@@ -239,11 +240,11 @@ def accept():
         if existing_document:
             db.isqQuestions.update_one(
                 {'Question': question},
-                {'$set': {new_column: answer, 'verifiedON': datetime.now().strftime('%Y-%m-%d'),'Date':Date}}
+                {'$set': {new_column: answer, 'verifiedON': datetime.now().strftime('%Y-%m-%d'),'date':date,'dataSteward':dataSteward}}
             )
             return jsonify({'message': f'Document with question " {question}" updated successfully'})
         else:
-            db.isqQuestions.insert_one({'Question': question, new_column: answer,'productType':productType, 'verifiedON': datetime.now().strftime('%Y-%m-%d'),'Date':Date})
+            db.isqQuestions.insert_one({'Question': question, new_column: answer,'productType':productType, 'verifiedON': datetime.now().strftime('%Y-%m-%d'),'date':date,'dataSteward':dataSteward})
             return jsonify({'message': 'New document inserted successfully'})
     except Exception as e:
         return jsonify({'error': f'Error processing data: {str(e)}'})
@@ -438,10 +439,12 @@ def process_excel():
         for _, row in df.iterrows():
             question = row['Question']
             product = row['Product']
+            dataSteward = row['DataSteward']
+            date = row['date']
 
             context = get_context(question, top_k=1)
             results=extract_answer(question, context)
-            result.append({"question": question, "answer": results,"context":context,"productType":product})
+            result.append({"question": question, "answer": results,"context":context,"productType":product,"dataSteward":dataSteward,"date":date})
 
         return jsonify({"result": result})
 
@@ -456,8 +459,10 @@ def get_custom_answer():
         question = data.get('Question')
         productType = data.get('productType')
         context = get_context(question, top_k=1)
+        dataSteward=data.get("dataSteward")
+        date=data.get("date")
         results=extract_answer(question, context)
-        return jsonify({"question": question,"answer":results,"context":context,"productType":productType})
+        return jsonify({"question": question,"answer":results,"context":context,"productType":productType,"dataSteward":dataSteward,"date":date})
     
     except Exception as e:
         return jsonify({'error': f'Error updating record: {str(e)}'})
