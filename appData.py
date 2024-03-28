@@ -240,7 +240,7 @@ def accept():
         if existing_document:
             db.isqQuestions.update_one(
                 {'Question': question},
-                {'$set': {new_column: answer, 'verifiedON': datetime.now().strftime('%Y-%m-%d'),'date':date,'dataSteward':dataSteward}}
+                {'$set': {'new_column': answer,'answer': answer,  'verifiedON': datetime.now().strftime('%Y-%m-%d'),'date':date,'dataSteward':dataSteward}}
             )
             return jsonify({'message': f'Document with question " {question}" updated successfully'})
         else:
