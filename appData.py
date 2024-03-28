@@ -240,11 +240,11 @@ def accept():
         if existing_document:
             db.isqQuestions.update_one(
                 {'Question': question},
-                {'$set': {'new_column': answer,'answer': answer,  'verifiedON': datetime.now().strftime('%Y-%m-%d'),'date':date,'dataSteward':dataSteward}}
+                {'$set': {new_column: answer,'answer': answer,  'verifiedON': datetime.now().strftime('%Y-%m-%d'),'date':date,'dataSteward':dataSteward}}
             )
             return jsonify({'message': f'Document with question " {question}" updated successfully'})
         else:
-            db.isqQuestions.insert_one({'Question': question, new_column: answer,'productType':productType, 'verifiedON': datetime.now().strftime('%Y-%m-%d'),'date':date,'dataSteward':dataSteward})
+            db.isqQuestions.insert_one({'Question': question,'answer': answer,  new_column: answer,'productType':productType, 'verifiedON': datetime.now().strftime('%Y-%m-%d'),'date':date,'dataSteward':dataSteward})
             return jsonify({'message': 'New document inserted successfully'})
     except Exception as e:
         return jsonify({'error': f'Error processing data: {str(e)}'})
