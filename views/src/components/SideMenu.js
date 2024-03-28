@@ -28,7 +28,7 @@ const SideMenu = () => {
                 fontWeight: isActive('/') ? 'bold' : 'normal',
               }}
             >
-              ISQ Questionare
+              ISQ questionnaire
             </Link>
             </li>
             <li style={{ padding: '10px' }}>
@@ -40,7 +40,7 @@ const SideMenu = () => {
                 fontWeight: isActive('/modeldata') ? 'bold' : 'normal',
               }}
             >
-              Verfied Questionare
+              Verfied questionnaire
             </Link>
           </li>
           {/* <li style={{ padding: '10px' }}>

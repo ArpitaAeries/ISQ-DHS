@@ -15,13 +15,14 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
-const categories = ['eS One DevOps', 'Perform Platform', 'eS One Product Owner', 'Gemini','Corporate InfoSec'];
+//const categories = ['eS One DevOps', 'Perform Platform', 'eS One Product Owner', 'Gemini','Corporate InfoSec'];
 
 function ModelData() {
-  let [formValue,setFormValue]=useState({quarter:'Q1',year:'2024',file:null,productType:'eS One DevOps'})
+  let [formValue,setFormValue]=useState({startDate:'',endDate:'',productType:null,dataSteward:null})
   let [data,setData]=useState([])
   let [filteredData,setFilteredData]=useState(false)
-  let [selectedQy,setSelectedQy]=useState([])
+  let [categories,setCategories]=useState([])
+  let [dataSteward,setDataSteward]=useState([])
 
   const [newfilteredData, setNewFilteredData] = useState(data);
   const [new1filteredData, setNew1FilteredData] = useState(data);
@@ -30,25 +31,25 @@ function ModelData() {
   }
   const formSubmit=(event)=>{
     event.preventDefault()
-    let newKey=formValue.quarter+formValue.year
-    let filterData= data.filter(obj => {
-        return Object.keys(obj).some(key => key.includes(newKey));
-      });
+    const { startDate, endDate, productType, dataSteward } = formValue;
+    const filtered = data.filter(item => {
+      const itemDate = new Date(item.date);
+      const startDateObj = startDate ? new Date(startDate) : null;
+      const endDateObj = endDate ? new Date(endDate) : null;
 
-    let filteredProductTypeData=filterData.filter(obj=>obj.productType==formValue.productType)
-    console.log(filterData,filteredProductTypeData)
-      setSelectedQy(newKey)
-      setFilteredData(true)
-      setNew1FilteredData(filteredProductTypeData)
-  }
-  const loadAfterUpdate=()=>{
-    let newKey=formValue.quarter+formValue.year
-    let filterData= data.filter(obj => {
-        return Object.keys(obj).some(key => key.includes(newKey));
-      });
-      setSelectedQy(newKey)
-    setFilteredData(filterData)
-  }
+      const withinDateRange =
+        (!startDateObj || itemDate >= startDateObj) &&
+        (!endDateObj || itemDate <= endDateObj);
+
+      const matchProductType = !productType || item.productType === productType;
+      const matchDataSteward = !dataSteward || item.dataSteward === dataSteward;
+
+      return withinDateRange && matchProductType && matchDataSteward;
+    });
+    console.log(filtered)
+    setNewFilteredData(filtered)
+    setNew1FilteredData(filtered)
+   }
 
   const onAccept=(arg)=>{
     const parm = {
@@ -111,7 +112,17 @@ function ModelData() {
     .then((response) => response.json())
     .then((res) => {
       setData(res.data)
-      setNewFilteredData(res.data)
+      const currentDate = new Date();
+      const sixMonthsAgo = new Date(currentDate);
+      sixMonthsAgo.setMonth(currentDate.getMonth() - 6);
+      const filtered = res.data.filter(item => {
+        const itemDate = new Date(item.date);
+        return itemDate >= sixMonthsAgo && itemDate <= currentDate;
+      });
+      setCategories(res?.data.map((item)=>item.productType))
+      setDataSteward(res?.data.map((item)=>item.dataSteward))
+      setNewFilteredData(filtered)
+      setNew1FilteredData(filtered)
     })
     .catch((error) => console.error(error));
   }
@@ -231,27 +242,28 @@ function ModelData() {
       <form onSubmit={formSubmit}>
         <div className='formControls'>
           <div className='formControl'>
-            <label>Select Quarter</label>
-            <select value={formValue.quarter} onChange={(e)=>setFormValue({...formValue,quarter:e.target.value})}>
-              <option value={'Q1'}>Q1</option>
-              <option value={'Q2'}>Q2</option>
-              <option value={'Q3'}>Q3</option>
-              <option value={'Q4'}>Q4</option>
-            </select>
+            <label>Select Start Date</label>
+            <input type='date' value={formValue.startDate} onChange={(e)=>setFormValue({...formValue,startDate:e.target.value})} />
+
           </div>
           <div className='formControl'>
-          <label>Select Year</label>
-            <select value={formValue.year} onChange={(e)=>setFormValue({...formValue,year:e.target.value})}>
-            <option value={'2024'}>2024</option>
-              <option value={'2023'}>2023</option>
-              <option value={'2022'}>2022</option>
-              <option value={'2021'}>2021</option>
-            </select>
+            <label>Select End Date</label>
+            <input type='date' value={formValue.endDate} onChange={(e)=>setFormValue({...formValue,endDate:e.target.value})} />
           </div>
           <div className='formControl'>
-          <label>Product Type</label>
+           <label>Product Type</label>
             <select value={formValue.productType} onChange={(e)=>setFormValue({...formValue,productType:e.target.value})}>
+            <option value={null}>Select</option>
               {categories.map((item,index)=>(
+              <option key={index} value={item}>{item}</option>
+              ))}
+            </select>
+          </div>
+          <div className='formControl'>
+           <label>Data Steward</label>
+            <select value={formValue.dataSteward} onChange={(e)=>setFormValue({...formValue,dataSteward:e.target.value})}>
+            <option value={null}>Select</option>
+              {dataSteward.map((item,index)=>(
               <option key={index} value={item}>{item}</option>
               ))}
             </select>
@@ -260,12 +272,13 @@ function ModelData() {
             <input type='file' onChange={(e)=>hangleFile(e)}/>
           </div> */}
           <div className=''>
-            <button type='submit'>Submit</button>
+            <button type='submit'>Filter</button>
+            <button type='button' onClick={()=>setNewFilteredData(data)}>Reset</button>
           </div>
         </div>
       </form>
       <div>
-      { filteredData?
+      {/* { filteredData?
         <>
         <div>
           <input type="text" placeholder="Search by question" onChange={(e) => handleNewSearch(e.target.value)} style={{maxWidth:'300px',float:'right'}}/>
@@ -277,7 +290,6 @@ function ModelData() {
             <th>Product Type</th>
             <th>Verfied On</th>
             <th>Modify</th>
-            {/* <th>Action</th> */}
           </tr>
           { new1filteredData &&
             new1filteredData?.map((item,index)=>(
@@ -292,7 +304,7 @@ function ModelData() {
           }
         </table>
         </>
-        :
+        : */}
         <>
          <div>
           <input type="text" placeholder="Search by question" onChange={(e) => handleSearch(e.target.value)} style={{maxWidth:'300px',float:'right'}}/>
@@ -302,6 +314,8 @@ function ModelData() {
             <th>Question</th>
             <th>Answer</th>
             <th>Product Type</th>
+            <th>Data Steward</th>
+            <th>Date</th>
             <th>Verfied On</th>
             <th>Modify</th>
             {/* <th>Action</th> */}
@@ -311,8 +325,11 @@ function ModelData() {
               <tr key={index}>
                 <td>{item.Question}</td>
                 {/* <td>{extractQuarterYear(item)}</td> */}
-                <td dangerouslySetInnerHTML={{ __html: extractLatestQuarterYear(item) }} />
+                {/* <td dangerouslySetInnerHTML={{ __html: extractLatestQuarterYear(item) }} /> */}
+                <td>{item.answer}</td>
                 <td>{item.productType}</td>
+                <td>{item.dataSteward}</td>
+                <td>{item.date}</td>
                 <td>{item.verifiedON}</td>
                 <td><button onClick={()=>openPopUp(item)}>Modify</button></td>
               </tr>
@@ -320,7 +337,7 @@ function ModelData() {
           }
         </table>
         </>
-        }
+        {/* } */}
       </div>
       <Modal
         open={open}

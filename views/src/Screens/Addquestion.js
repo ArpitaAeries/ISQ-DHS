@@ -5,9 +5,10 @@ import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Chip from '@mui/material/Chip';
 
-const Addquestion = ({question,productType}) => {
+const Addquestion = ({question,productType,datastewardprop}) => {
   const [questionValue, setQuestionValue] = useState([]);
   const [categoryValue, setCategoryValue] = useState([]);
+  const [datasteward, setDatasteward] = useState([]);
 
   const questions = ['Does the vendor maintain any formal security policies &  How often is the vendor’s security posture reviewed?', 
   'Will the vendor provide a copy of their last two security audit, penetration test, and/or vulnerability assessment?',
@@ -24,81 +25,40 @@ const Addquestion = ({question,productType}) => {
   const getOptionLabel = (option) => (typeof option === 'string' ? option : '');
 
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={12} sm={6}>
-        <Autocomplete
-          
-          id="question-autocomplete"
-          size="small"
-          options={questions}
+    <div className='formControls'>
+      <div className='formControl'>
+        <input
+         type='text'
+          placeholder='Question'
           value={questionValue}
-          onChange={(_, newValue) => {
-            setQuestionValue(newValue) 
-            question(newValue)
-          }}
-          freeSolo
-          getOptionLabel={getOptionLabel}
-          renderTags={(value, getTagProps) =>
-            value.map((option, index) => (
-              <Chip
-                label={option}
-                {...getTagProps({ index })}
-                onDelete={() => {
-                  const newValues = [...questionValue];
-                  newValues.splice(index, 1);
-                  setQuestionValue(newValues);
-                }}
-              />
-            ))
-          }
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              variant="standard"
-              label="Question"
-              placeholder="Question"
-            />
-          )}
-        />
-      </Grid>
+          onChange={(e) => {
+            setQuestionValue(e.target.value) 
+            question(e.target.value)
+          }}/> 
+      </div>
 
-      <Grid item xs={12} sm={6}>
-        <Autocomplete
-          
-          id="category-autocomplete"
-          size="small"
-          options={categories}
+      <div className='formControl'>
+        <input
+         type='text'
+          placeholder='Product Type'
           value={categoryValue}
-          onChange={(_, newValue) =>{
-             setCategoryValue(newValue)
-             productType(newValue)
+          onChange={(e) =>{
+             setCategoryValue(e.target.value)
+             productType(e.target.value)
           }}
-          freeSolo
-          getOptionLabel={getOptionLabel}
-          renderTags={(value, getTagProps) =>
-            value.map((option, index) => (
-              <Chip
-                label={option}
-                {...getTagProps({ index })}
-                onDelete={() => {
-                  const newValues = [...categoryValue];
-                  newValues.splice(index, 1);
-                  setCategoryValue(newValues);
-                }}
-              />
-            ))
-          }
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              variant="standard"
-              label="Product Type"
-              placeholder="Product Type"
-            />
-          )}
-        />
-      </Grid>
-    </Grid>
+          /> 
+      </div>
+      <div className='formControl'>
+        <input type='text'
+         placeholder='Data Steward'
+         value={datasteward}
+          onChange={(e) =>{
+            setDatasteward(e.target.value)
+            datastewardprop(e.target.value)
+          }}
+         /> 
+      </div>
+    </div>
   );
 };
 
