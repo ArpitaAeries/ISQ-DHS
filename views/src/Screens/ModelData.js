@@ -18,6 +18,8 @@ const style = {
   p: 4,
 };
 //const categories = ['eS One DevOps', 'Perform Platform', 'eS One Product Owner', 'Gemini','Corporate InfoSec'];
+const productTypes = ['Perform Platform','eS One DevOps','eS One Product Owner','Gemini,Perform','eS One Offshore','Corporate InfoSec','PerformPlatform','Corporate InfoSec'];
+const datastewards=['Tom Gregory','Jason Lee','Joe Gallagher','Garrett Dunne','James Power','Somsuvra Mukherjee','Chris Mielke','Jason','Jim Power','Somsuvra Mukherjee','Jose']
 
 function ModelData() {
   let [formValue,setFormValue]=useState({startDate:'',endDate:'',productType:null,dataSteward:null})
@@ -266,7 +268,7 @@ function ModelData() {
            <label>Product Type</label>
             <select value={formValue.productType} onChange={(e)=>setFormValue({...formValue,productType:e.target.value})}>
             <option value={null}>Select</option>
-              {categories.map((item,index)=>(
+              {productTypes.map((item,index)=>(
               <option key={index} value={item}>{item}</option>
               ))}
             </select>
@@ -275,7 +277,7 @@ function ModelData() {
            <label>Data Steward</label>
             <select value={formValue.dataSteward} onChange={(e)=>setFormValue({...formValue,dataSteward:e.target.value})}>
             <option value={null}>Select</option>
-              {dataSteward.map((item,index)=>(
+              {datastewards.map((item,index)=>(
               <option key={index} value={item}>{item}</option>
               ))}
             </select>

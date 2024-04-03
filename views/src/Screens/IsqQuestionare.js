@@ -11,7 +11,7 @@ import sample from '../assets/files/sample.xlsx'
 
 let basePath="https://llmusecases.aeriestechnology.com/isqapi/"
 function IsqQuestionare() {
-  let [formValue,setFormValue]=useState({quarter:'Q1',year:'2023',file:null,type:'Single',startDate:''})
+  let [formValue,setFormValue]=useState({quarter:'Q1',year:'2023',file:null,type:'Single',startDate:null})
   let [loader,setLoader]=useState(false)
   let [question,setQuestion]=useState(null)
   let [category,setCategory]=useState(null)
@@ -32,7 +32,7 @@ function IsqQuestionare() {
     const formdata = new FormData();
     if(formValue.type=='Bulk'){
       if(!formValue.file){
-          alert('Please fill all details')
+          alert('Please upload file')
           return
       }
       setLoader(true)
@@ -54,7 +54,7 @@ function IsqQuestionare() {
         .catch((error) => {console.error(error)  
           setLoader(false)});
     }else{
-      if(formValue.startDate===''&&question==null&&category==null&&dataSteward==null){
+      if(formValue.startDate==null || question==null || category==null || dataSteward==null){
           alert('Please fill all details')
           return
       }
