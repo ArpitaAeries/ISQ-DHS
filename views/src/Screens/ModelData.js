@@ -331,7 +331,7 @@ function ModelData() {
             <th>Product Type</th>
             <th>Data Steward</th>
             <th>Date</th>
-            <th>Verfied On</th>
+            <th>Verified On</th>
             <th>Modify</th>
             {/* <th>Action</th> */}
           </tr>
