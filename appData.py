@@ -432,7 +432,7 @@ def process_excel():
 
     if file.filename.endswith('.xls') or file.filename.endswith('.xlsx'):
         df = pd.read_excel(file)
-        if 'Question' not in df.columns or 'Product' not in df.columns or 'dataSteward' not in df.columns or 'date' not in df.columns:
+        if 'Question' not in df.columns or 'Product' not in df.columns or 'DataSteward' not in df.columns or 'date' not in df.columns:
             return jsonify({"error": "Missing required columns in the Excel file"}), 400
 
         result = []
