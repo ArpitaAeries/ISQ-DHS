@@ -3,8 +3,7 @@ import React from 'react'
 const Loading = () => {
   return (
     <div className="loader-container">
-      <div className="customloader">
-      </div>
+      <div class="loader center"><span></span></div>
     </div>
   )
 }
