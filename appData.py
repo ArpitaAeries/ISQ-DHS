@@ -311,7 +311,7 @@ def update_record():
 
         result = db.isqQuestions.update_one(
             {'Question': question_to_update},
-            {'$set': {newColumn: new_answer}}
+            {'$set': {'answer': new_answer}}
         )
 
         if result.modified_count > 0:

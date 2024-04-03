@@ -362,7 +362,7 @@ function ModelData() {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Update Answer({popUpData?.qy})
+            Update Answer
           </Typography>
           <textarea value={popUpData?.UpdatedAnswer} onChange={(e)=>setPopUpData({...popUpData,UpdatedAnswer:e.target.value})} type='text' placeholder='Enter Answer' style={{width:'100%',height:'60px'}}/>
          <div className='text-center w-100'>
