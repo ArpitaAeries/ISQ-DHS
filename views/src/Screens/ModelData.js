@@ -34,6 +34,10 @@ function ModelData() {
   const formSubmit=(event)=>{
     event.preventDefault()
     const { startDate, endDate, productType, dataSteward } = formValue;
+    if(startDate==''&&endDate=='' ){
+      alert('Please select start date and end date')
+      return
+    }
     const filtered = data.filter(item => {
       const itemDate = new Date(item.date);
       const startDateObj = startDate ? new Date(startDate) : null;
@@ -250,12 +254,12 @@ function ModelData() {
        <div className='form_container'>
        <div className='formControls'>
           <div className='formControl'>
-            <label>Select Start Date</label>
+            <label>Select Start Date*</label>
             <input type='date' value={formValue.startDate} onChange={(e)=>setFormValue({...formValue,startDate:e.target.value})} />
 
           </div>
           <div className='formControl'>
-            <label>Select End Date</label>
+            <label>Select End Date*</label>
             <input type='date' value={formValue.endDate} onChange={(e)=>setFormValue({...formValue,endDate:e.target.value})} />
           </div>
           <div className='formControl'>

@@ -29,7 +29,7 @@ const Addquestion = ({question,productType,datastewardprop}) => {
       <div className='formControl'>
         <input
          type='text'
-          placeholder='Question'
+          placeholder='Question *'
           value={questionValue}
           onChange={(e) => {
             setQuestionValue(e.target.value) 
@@ -40,7 +40,7 @@ const Addquestion = ({question,productType,datastewardprop}) => {
       <div className='formControl'>
         <input
          type='text'
-          placeholder='Product Type'
+          placeholder='Product Type *'
           value={categoryValue}
           onChange={(e) =>{
              setCategoryValue(e.target.value)
@@ -50,7 +50,7 @@ const Addquestion = ({question,productType,datastewardprop}) => {
       </div>
       <div className='formControl'>
         <input type='text'
-         placeholder='Data Steward'
+         placeholder='Data Steward *'
          value={datasteward}
           onChange={(e) =>{
             setDatasteward(e.target.value)

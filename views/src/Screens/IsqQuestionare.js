@@ -7,6 +7,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import Header from '../components/Header';
 import SideMenu from '../components/SideMenu';
 
+import sample from '../assets/files/sample.xlsx'
+
 let basePath="https://llmusecases.aeriestechnology.com/isqapi/"
 function IsqQuestionare() {
   let [formValue,setFormValue]=useState({quarter:'Q1',year:'2023',file:null,type:'Single',startDate:''})
@@ -26,9 +28,14 @@ function IsqQuestionare() {
 
   const formSubmit=(event)=>{
     event.preventDefault()
+
     const formdata = new FormData();
-    setLoader(true)
     if(formValue.type=='Bulk'){
+      if(!formValue.file){
+          alert('Please fill all details')
+          return
+      }
+      setLoader(true)
       let path=basePath+'process_excel'
       formdata.append("file", formValue.file);
       const requestOptions = {
@@ -40,13 +47,18 @@ function IsqQuestionare() {
         .then((response) => response.json())
         .then((res) => {
           let modifiedData = res.result.map(item => ({ ...item, isAccepted: false }));
+          console.log(modifiedData)
           setData(modifiedData)
           setLoader(false)
         })
         .catch((error) => {console.error(error)  
           setLoader(false)});
     }else{
-      console.log(formValue.startDate)
+      if(formValue.startDate===''&&question==null&&category==null&&dataSteward==null){
+          alert('Please fill all details')
+          return
+      }
+      setLoader(true)
       let path=basePath+'get_custom_answer'
       let data={
         "Question":question,
@@ -77,15 +89,15 @@ function IsqQuestionare() {
   }
   
 
-  const onAccept=(arg)=>{
+  const onAccept = async (arg) => {
     const parm = {
       "Question": arg.question,
-      "date":arg.date,
+      "date": arg.date,
       "quarter": formValue.quarter,
       "year": formValue.year,
-      "answer":arg.context,
-      "productType":arg.productType,
-      "dataSteward":arg.dataSteward
+      "answer": arg.context,
+      "productType": arg.productType,
+      "dataSteward": arg.dataSteward
     };
     const requestOptions = {
       method: "POST",
@@ -94,18 +106,20 @@ function IsqQuestionare() {
       },
       body: JSON.stringify(parm)
     };
-    
-    fetch(basePath+"accept", requestOptions)
+  
+    await fetch(basePath + "accept", requestOptions)
       .then((response) => response.json())
       .then((res) => {
-        const updatedData = data.map(item => 
-          item.Questions === arg.Questions ? { ...item, isAccepted: true } : item
+        const updatedData = data.map(item =>
+          item.question === arg.question ? { ...item, isAccepted: true } : item
         );
+        console.log(updatedData)
         setData(updatedData);
         alert('Data Accepted')
       })
       .catch((error) => console.error(error));
   }
+  
 
   const onReject=(arg)=>{
     const url = basePath+'reject_record';
@@ -162,12 +176,14 @@ function IsqQuestionare() {
               <option value={'Bulk'}>Bulk</option>
             </select>
           </div>
-          <div className='formControl'>
-            <label>Select Date</label>
-          {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
-          <input type='date' value={formValue.startDate} onChange={(e)=>setFormValue({...formValue,startDate:e.target.value})} />
 
-          </div>
+
+          {formValue.type!=='Bulk' &&
+          <div className='formControl'>
+            <label>Select Date*</label>
+          <input type='date' value={formValue.startDate} onChange={(e)=>setFormValue({...formValue,startDate:e.target.value})} /></div>
+          }
+          
           {/* <div className='formControl'>
             <label>Select Quarter</label>
             <select value={formValue.quarter} onChange={(e)=>setFormValue({...formValue,quarter:e.target.value})}>
@@ -194,6 +210,7 @@ function IsqQuestionare() {
            }
           <div className='text-center w-100'>
             <button type='submit'>Submit</button>
+            {formValue.type=='Bulk' &&  <a className='downloadButton' download href={sample}>Download Sample</a>}
           </div>
         </div>
       </form>

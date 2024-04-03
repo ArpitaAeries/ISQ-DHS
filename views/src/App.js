@@ -17,9 +17,9 @@ const App = () => {
           {/* <SideMenu /> */}
           <main>
             <Routes>
-              <Route path="/" element={<IsqQuestionare />} />
+              <Route path="/home" element={<IsqQuestionare />} />
               <Route path="/data" element={<Data />} />
-              <Route path="/login" element={<Login />} />
+              <Route path="/" element={<Login />} />
               <Route path="/modeldata" element={<ModelData />} />
               {/* Add more routes for other pages */}
             </Routes>

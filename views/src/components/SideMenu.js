@@ -14,11 +14,11 @@ const SideMenu = () => {
         <ul style={{ listStyle: 'none', padding: 0 }}>
           <li style={{ padding: '10px' }}>
             <Link
-              to="/"
+              to="/home"
               style={{
                 textDecoration: 'none',
-                color: isActive('/') ? '#fff' : '#4dd7ce', 
-                fontWeight: isActive('/') ? 'bold' : 'normal',
+                color: isActive('/home') ? '#fff' : '#4dd7ce', 
+                fontWeight: isActive('/home') ? 'bold' : 'normal',
               }}
             >
               ISQ Questionnaire

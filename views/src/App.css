@@ -412,3 +412,20 @@ header{
 .MuiBox-root.css-1acyv19{
   background: #003153;
 }
+
+.downloadButton{
+  position: relative;
+  margin-right: 2rem;
+  height: 40px;
+  background: #4dd7ce;
+  font-size: 16px;
+  color: #000;
+  cursor: pointer;
+  border-radius: 0px;
+  border: none;
+  outline: none;
+  text-decoration: none;
+  align-self: flex-end;
+  width: 300px;
+  line-height: 2.4;
+}

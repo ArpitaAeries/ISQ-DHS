@@ -3,7 +3,7 @@ import React from 'react';
 import logo from '../assets/blue-logo.svg'
 const Header = () => {
   const logoUrl = 'YourLogo.png';
-  const username = 'Masood'; 
+  const username = 'Guest'; 
 
   return (
     <header
