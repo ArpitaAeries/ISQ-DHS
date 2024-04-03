@@ -16,7 +16,7 @@ const Addquestion = ({question,productType,datastewardprop}) => {
   
   
   const productTypes = ['Perform Platform','eS One DevOps','eS One Product Owner','Gemini,Perform','eS One Offshore','Corporate InfoSec','PerformPlatform','Corporate InfoSec'];
-  const datastewards=['Tom Gregory','Jason Lee','Joe Gallagher','Garrett Dunne','James Power','Somsuvra Mukherjee','Chris Mielke','Jason','Jim Power','Somsuvra Mukherjee','Jose']
+  const datastewards=['Tom Gregory','Jason Lee','Joe Gallagher','Garrett Dunne','James Power','Somsuvra Mukherjee','Chris Mielke','Jason','Jim Power','Jose']
 
   const handleApiCall = () => {
     console.log('API Call with Questions:', questionValue, 'and Categories:', categoryValue);
