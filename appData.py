@@ -432,7 +432,7 @@ def process_excel():
 
     if file.filename.endswith('.xls') or file.filename.endswith('.xlsx'):
         df = pd.read_excel(file)
-        if 'Question' not in df.columns or 'Product' not in df.columns:
+        if 'Question' not in df.columns or 'Product' not in df.columns or 'dataSteward' not in df.columns or 'date' not in df.columns:
             return jsonify({"error": "Missing required columns in the Excel file"}), 400
 
         result = []
@@ -442,9 +442,12 @@ def process_excel():
             dataSteward = row['DataSteward']
             date = row['date']
 
+            if isinstance(date, datetime):
+                date = date.strftime('%Y-%m-%d')
+
             context = get_context(question, top_k=1)
-            results=extract_answer(question, context)
-            result.append({"question": question, "answer": results,"context":context,"productType":product,"dataSteward":dataSteward,"date":date})
+            results = extract_answer(question, context)
+            result.append({"question": question, "answer": results, "context": context, "productType": product, "dataSteward": dataSteward, "date": date})
 
         return jsonify({"result": result})
 

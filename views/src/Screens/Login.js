@@ -4,11 +4,11 @@ import { useNavigate } from 'react-router-dom';
 const Login = () => {
     const navigate = useNavigate();
 
-    const [creds, setCreds] = useState({ username: '', password: '' });
+    const [creds, setCreds] = useState({ username: 'test@companyname.com', password: 'Test@123' });
 
     const handleSignIn = (e) => {
         e.preventDefault();
-        if(creds.username==='guest@aeriestechnology.com',creds.password==='guest@123'){
+        if(creds.username==='test@companyname.com',creds.password==='Test@123'){
             navigate('/home');
         }else{
             alert('Invalid Credentials')
