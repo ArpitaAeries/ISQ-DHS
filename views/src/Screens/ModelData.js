@@ -3,6 +3,8 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import Header from '../components/Header';
+import SideMenu from '../components/SideMenu';
 let basePath="https://llmusecases.aeriestechnology.com/isqapi/"
 
 const style = {
@@ -239,8 +241,14 @@ function ModelData() {
     }
   return (
     <>
+    <Header/>
+    <section className='global_flex'>
+   
+   <SideMenu/>
+   <div className='data_table'>
       <form onSubmit={formSubmit}>
-        <div className='formControls'>
+       <div className='form_container'>
+       <div className='formControls'>
           <div className='formControl'>
             <label>Select Start Date</label>
             <input type='date' value={formValue.startDate} onChange={(e)=>setFormValue({...formValue,startDate:e.target.value})} />
@@ -271,11 +279,12 @@ function ModelData() {
           {/* <div className='formControl'>
             <input type='file' onChange={(e)=>hangleFile(e)}/>
           </div> */}
-          <div className=''>
-            <button type='submit'>Filter</button>
+          <div className='text-center w-100'>
+            <button type='submit' className='mr-5'>Filter</button>
             <button type='button' onClick={()=>setNewFilteredData(data)}>Reset</button>
           </div>
         </div>
+       </div>
       </form>
       <div>
       {/* { filteredData?
@@ -350,10 +359,14 @@ function ModelData() {
             Update Answer({popUpData?.qy})
           </Typography>
           <textarea value={popUpData?.UpdatedAnswer} onChange={(e)=>setPopUpData({...popUpData,UpdatedAnswer:e.target.value})} type='text' placeholder='Enter Answer' style={{width:'100%',height:'60px'}}/>
-          <button onClick={handleClose}>Close</button>
+         <div className='text-center w-100'>
+         <button onClick={handleClose}>Close</button>
           <button onClick={()=>modify()}>Modify</button>
+         </div>
         </Box>
       </Modal>
+   </div>
+    </section>
     </>
   )
 }

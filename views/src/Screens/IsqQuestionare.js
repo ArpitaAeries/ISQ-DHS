@@ -4,6 +4,8 @@ import Loading from '../components/Loading'
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
+import Header from '../components/Header';
+import SideMenu from '../components/SideMenu';
 
 let basePath="https://llmusecases.aeriestechnology.com/isqapi/"
 function IsqQuestionare() {
@@ -146,8 +148,12 @@ function IsqQuestionare() {
   }
   return (
     <>
+    <Header/>
+   <section className='global_flex'>
+   <SideMenu/>
+      <div className='data_table'>
       {loader && <Loading/>}
-      <form onSubmit={formSubmit}>
+      <form onSubmit={formSubmit} className='form_container'>
         <div className='formControls'>
         <div className='formControl'>
             <label>Select Type</label>
@@ -186,12 +192,13 @@ function IsqQuestionare() {
           </div>:
            <Addquestion question={handleQuestion} productType={handleProductType} datastewardprop={handleDatastewardprop}/>
            }
-          <div className=''>
+          <div className='text-center w-100'>
             <button type='submit'>Submit</button>
           </div>
         </div>
       </form>
-      <div>
+
+      <div className='data_container'>
       { data.length!==0 &&
         <table>
           <tr>
@@ -226,6 +233,11 @@ function IsqQuestionare() {
         </table>
       }
       </div>
+      </div>
+     
+   </section>
+
+  
     </>
   )
 }

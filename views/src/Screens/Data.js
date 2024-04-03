@@ -3,6 +3,8 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import Header from '../components/Header';
+import SideMenu from '../components/SideMenu';
 
 const style = {
   position: 'absolute',
@@ -87,8 +89,12 @@ function Data() {
     
   return (
     <>
-    <div>
-      <input type="text" placeholder="Search by question" onChange={(e) => handleSearch(e.target.value)} style={{maxWidth:'300px',float:'right'}}/>
+    <Header/>
+   <div className='global_flex'>
+   <SideMenu/>
+   <div className='data_table'>
+   <div>
+      <input type="text" placeholder="Search by question" onChange={(e) => handleSearch(e.target.value)} style={{marginTop:'2rem',marginBottom:'0'}}/>
     </div>
     <table>
           <tr>
@@ -123,6 +129,8 @@ function Data() {
           <button onClick={()=>modify()}>Modify</button>
         </Box>
       </Modal>
+   </div>
+   </div>
     </>
   )
 }

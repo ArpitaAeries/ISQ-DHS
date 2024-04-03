@@ -1,49 +1,26 @@
-.App {
-  text-align: center;
-}
+body{
+  font-family: 'Montserrat', sans-serif;
+  background: #003153;
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-main{
-  width: 80%;
-  margin: 20px auto;
-  background-color: #fff;
   box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 5px;
-  border-radius: 25px;
-  padding: 25px;
+}
+main{
+  /* width: 80%;
+  margin: 20px auto;
+  background-color: #fff; */
+  /* background: rgb(243,110,77);
+background: linear-gradient(90deg, #129A96 0%, #4dd7ce 100%); */
+background: #003153;
+
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 5px;
+  /* border-radius: 25px;
+  padding: 25px; */
+}
+header{
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 .formControls{
   display:flex;
@@ -51,24 +28,36 @@ main{
   flex-wrap: wrap;
   width: 100%;
   align-items: center;
+  justify-content: space-between;
+}
+.global_flex{
+  display: flex;
 }
 .formControl{
   width:30%;
 }
 .formControl >*{
   width:100%;
-  height:32px;
+  height:45px;
 }
 
-
-input{
+::placeholder {
+  color: #4dd7ce; /* Change this to the color you desire */
+}
+input,select{
   width:100%;
   height: 35px;
   outline:none;
-  background: #FFFFFF 0% 0% no-repeat padding-box;
-  border: 1px solid #CED1D5;
-  border-radius: 5px;
+  background:transparent;
+  box-shadow: none;
+  border: none;
+  border-bottom: 1px solid #4dd7ce;
+  color:#4dd7ce ;
+  border-radius: 0px;
   padding:0 15px;
+  margin-right: 15px;
+  box-sizing: border-box;
+  margin-bottom: 1rem;
 }
 input[type=file]{
   padding:0;
@@ -98,21 +87,27 @@ button{
 }
 table{
   width:100%;
-  margin-top: 20px;
+  /* margin-top: 20px; */
 }
 table td, table th {
   padding: 8px;
+  color: #fff;
+  line-height: 25px;
 }
 
-table tr:nth-child(even){background-color: #f2f2f2;}
+table tr:nth-child(even){background-color:rgba(2,42,71,0.2);color: #fff;
 
-table tr:hover {background-color: #ddd;}
+}
 
+table tr:hover {background-color:rgba(2,42,71,0.2) ;}
+td{
+  border-bottom: 1px solid #4dd7ce;
+}
 table th {
-  padding-top: 6px;
-  padding-bottom: 6px;
+  padding-top: 1.5rem;
+  padding-bottom:1.5rem;
   text-align: left;
-  background-color: #14458B;
+  background-color: #022a47;
   color: white;
 }
 .loader-container {
@@ -141,5 +136,278 @@ table th {
   100% { transform: rotate(360deg); }
 }
 .formControl input{
-  width: 330px;
+  /* width: 330px; */
+}
+
+
+
+.heart-rate {
+  /* width: 150px;
+  height: 73px; */
+  position: relative;
+  margin: 0px auto;
+  
+}
+.heart-rate svg{
+  opacity: 0.05;
+}
+.fade-in {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(red, green, blue, alpha);
+  top: 0;
+  right: 0;
+  animation: heartRateIn 2.5s linear infinite;
+}
+
+.fade-out {
+  position: absolute;
+  width: 120%;
+  height: 100%;
+  top: 0;
+  left: -120%;
+  animation: heartRateOut 2.5s linear infinite;
+  background: rgba(255, 255, 255, 1);
+  background: -moz-linear-gradient(left, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 0) 100%);
+  background: -webkit-linear-gradient(left, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 0) 100%);
+  background: -o-linear-gradient(left, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 0) 100%);
+  background: -ms-linear-gradient(left, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(to right, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 80%, rgba(255, 255, 255, 0) 100%);
+}
+
+@keyframes heartRateIn {
+  0% {
+    width: 100%;
+  }
+  50% {
+    width: 0;
+  }
+  100% {
+    width: 0;
+  }
+}
+
+@keyframes heartRateOut {
+  0% {
+    left: -120%;
+  }
+  30% {
+    left: -120%;
+  }
+  100% {
+    left: 0;
+  }
+}
+
+
+
+
+
+
+
+.wrapper{
+  position: relative;
+  width: 400px;
+  /* height: 500px; */
+  /* background: rgba(255,255,255,0.1); */
+  border-radius: 0px;
+  border:1px solid #4dd7ce;
+  box-shadow: 0 0 50px rgba(0,0,0,0.1);
+  padding: 40px;
+  margin: 0 auto;
+  z-index: 2;
+  top:50%;
+  transform: translateY(-50%);
+}
+
+.form-wrapper{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  transition: 1s ease-in-out;
+}
+
+.wrapper.active .form-wrapper.sign-in{
+  transform: scale(0) translate(-300px, 500px);
+}
+
+.wrapper .form-wrapper.sign-up{
+  position: absolute;
+  top: 0; 
+  transform: scale(0) translate(200px, -500px);
+}
+
+.wrapper.active .form-wrapper.sign-up {
+  transform: scale(1) translate(0, 0);
+}
+
+h2{
+  /* font-size: 30px; */
+  color: #4dd7ce;
+  text-align: center;
+}
+
+.input-group{
+  position: relative;
+  margin: 30px 0;
+  border-bottom: 2px solid #4dd7ce;
+}
+
+.input-group label{
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  transform: translateY(-50%);
+  font-size: 16px;
+  color: #fff;
+  pointer-events: none;
+  transition: .5s;
+}
+
+.input-group input{
+  width: 320px;
+  height: 40px;
+  font-size: 16px;
+  color: #fff;
+  padding: 0 5px;
+  background: transparent;
+  border: none;
+  outline: none;  
+  margin-bottom: 0;
+}
+
+.input-group input:focus~label,
+.input-group input:valid~label
+{
+  top: -5px;
+}
+
+.remember{
+  margin: -5px 0 15px 5px;
+}
+
+.remember color{
+  color: #fff;
+  font-size: 14px;
+}
+
+.remember label input{
+  accent-color: #4dd7ce;
+}
+
+button{
+  position: relative;
+  width: 100%;
+  height: 40px;
+  background: #4dd7ce;
+  font-size: 16px;
+  color: #000;
+  cursor: pointer;
+  border-radius: 0px;
+  border: none;
+  outline: none;
+}
+
+.signUp-link{
+  font-size: 14px;
+  text-align: center;
+  margin: 15px 0;
+}
+
+.signUp-link p{
+  color: #fff;
+}
+
+.signUp-link p a{
+  color: #4dd7ce;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.signUp-link p a:hover{
+  text-decoration: underline;
+}
+
+.social-platform{
+  font-size: 14px;
+  color: #fff;
+  text-align: center;
+}
+
+svg{
+  position: absolute;
+  /* z-index: 1; */
+}
+
+
+
+
+.dh_logo{
+  width: 100%;
+    max-width: 200px;
+    height: auto;
+}
+
+header{
+  background: #efefef;
+  padding: 2rem;
+  color: #000;
+}
+
+.sidebar{
+  height: 100vh;
+  width: 18%;
+  box-sizing: border-box;
+  background: #022a47;
+  color: #fff;
+  padding: 2rem;
+}
+.data_table{
+  width: 82%;
+  box-sizing: border-box;
+}
+.form_container{
+  padding: 2rem;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+.mr-5{
+  /* margin-right: 2rem; */
+}
+.formControl label{
+  color: #4dd7ce;
+  display: inline-block;
+  margin-bottom: 0.1rem;
+  height: auto;
+}
+
+.text-center{
+  text-align: center;
+}
+.w-100{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.w-100 button{
+  width: 50%;
+  margin-top: 2rem;
+  /* margin-right: 2rem; */
+  box-sizing: border-box;
+  
+}
+.w-100 button:first-child{
+  margin-right: 2rem;
+}
+
+
+#modal-modal-title{
+  margin-bottom: 2rem;
+}
+
+.MuiBox-root.css-1acyv19{
+  background: #003153;
 }

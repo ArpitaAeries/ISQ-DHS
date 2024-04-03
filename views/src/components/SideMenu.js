@@ -7,15 +7,8 @@ const SideMenu = () => {
   const isActive = (pathname) => location.pathname === pathname;
 
   return (
-    <aside
-      style={{
-        height: '100vh', 
-        width: '200px',
-        backgroundColor: '#fff',
-        boxShadow: '0 2px 5px rgba(0, 0, 0, 0.2)',
-        display: 'flex',
-        flexDirection: 'column',
-      }}
+    <aside className='sidebar'
+     
     >
       <nav>
         <ul style={{ listStyle: 'none', padding: 0 }}>
@@ -24,11 +17,11 @@ const SideMenu = () => {
               to="/"
               style={{
                 textDecoration: 'none',
-                color: isActive('/') ? '#14458B' : '#333', 
+                color: isActive('/') ? '#fff' : '#4dd7ce', 
                 fontWeight: isActive('/') ? 'bold' : 'normal',
               }}
             >
-              ISQ questionnaire
+              ISQ Questionnaire
             </Link>
             </li>
             <li style={{ padding: '10px' }}>
@@ -36,11 +29,11 @@ const SideMenu = () => {
               to="/modeldata"
               style={{
                 textDecoration: 'none',
-                color: isActive('/modeldata') ? '#14458B' : '#333', 
+                color: isActive('/modeldata') ? '#fff' : '#4dd7ce', 
                 fontWeight: isActive('/modeldata') ? 'bold' : 'normal',
               }}
             >
-              Verfied questionnaire
+              Verified Questionnaire
             </Link>
           </li>
           {/* <li style={{ padding: '10px' }}>
