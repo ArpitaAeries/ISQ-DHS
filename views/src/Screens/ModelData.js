@@ -18,7 +18,7 @@ const style = {
   p: 4,
 };
 //const categories = ['eS One DevOps', 'Perform Platform', 'eS One Product Owner', 'Gemini','Corporate InfoSec'];
-const productTypes = ['Perform Platform','eS One DevOps','eS One Product Owner','Gemini,Perform','eS One Offshore','Corporate InfoSec','PerformPlatform','Corporate InfoSec'];
+const productTypes = ['Perform Platform','eS One DevOps','eS One Product Owner','Gemini','Perform','eS One Offshore','Corporate InfoSec'];
 const datastewards=['Tom Gregory','Jason Lee','Joe Gallagher','Garrett Dunne','James Power','Somsuvra Mukherjee','Chris Mielke','Jason','Jim Power','Jose']
 
 function ModelData() {
@@ -125,7 +125,7 @@ function ModelData() {
       sixMonthsAgo.setMonth(currentDate.getMonth() - 6);
       const filtered = res.data.filter(item => {
         const itemDate = new Date(item.date);
-        return itemDate >= sixMonthsAgo && itemDate <= currentDate;
+        return itemDate >= sixMonthsAgo;
       });
       setCategories(res?.data.map((item)=>item.productType))
       setDataSteward(res?.data.map((item)=>item.dataSteward))
@@ -350,6 +350,7 @@ function ModelData() {
               </tr>
             ))
           }
+           { newfilteredData.length==0 && <tr><td colSpan={7}>No Data Found</td></tr>}
         </table>
         </>
         {/* } */}

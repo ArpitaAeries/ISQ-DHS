@@ -15,7 +15,7 @@ const Addquestion = ({question,productType,datastewardprop}) => {
   'If cloud solution, does the vendor use a third-party storage solution?If yes, does the data storage vendor have any third- party certifications or attestations, such as FedRamp, FIPS 140 -2,FISMA and DIACAP, HIPAA, ISO 27001, PCI-DSS, TRUSTe or SOC 1/SOC 2/ SSAE 16/ISAE 3402? If yes, provide certification or attestations'];
   
   
-  const productTypes = ['Perform Platform','eS One DevOps','eS One Product Owner','Gemini,Perform','eS One Offshore','Corporate InfoSec','PerformPlatform','Corporate InfoSec'];
+  const productTypes = ['Perform Platform','eS One DevOps','eS One Product Owner','Gemini','Perform','eS One Offshore','Corporate InfoSec'];
   const datastewards=['Tom Gregory','Jason Lee','Joe Gallagher','Garrett Dunne','James Power','Somsuvra Mukherjee','Chris Mielke','Jason','Jim Power','Jose']
 
   const handleApiCall = () => {

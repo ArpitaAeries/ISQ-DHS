@@ -50,11 +50,12 @@ function IsqQuestionare() {
           console.log(modifiedData)
           setData(modifiedData)
           setLoader(false)
+          alert('File Uploaded successfully')
         })
         .catch((error) => {console.error(error)  
           setLoader(false)});
     }else{
-      if(formValue.startDate==null || question==null || category==null || dataSteward==null){
+      if(formValue.startDate==null || question==null || category==null || dataSteward==null || question=='' || category=='' || dataSteward=='' || dataSteward=='Select Data Steward *' || category=='Select Product Type *'){
           alert('Please fill all details')
           return
       }
@@ -170,7 +171,7 @@ function IsqQuestionare() {
       <form onSubmit={formSubmit} className='form_container'>
         <div className='formControls'>
         <div className='formControl'>
-            <label>Select Type</label>
+            <label>Select Type*</label>
             <select value={formValue.type} onChange={(e)=>setFormValue({...formValue,type:e.target.value})}>
               <option value={'Single'}>Single</option>
               <option value={'Bulk'}>Bulk</option>
