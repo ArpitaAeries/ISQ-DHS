@@ -148,7 +148,7 @@ table th {
   margin: 0px auto;
   
 }
-.heart-rate svg{
+.heart-rate svg.hero_bg{
   opacity: 0.03;
 }
 .fade-in {
@@ -338,13 +338,13 @@ button{
   text-align: center;
 }
 
-.heart-rate svg,svg.pulse{
+.heart-rate svg.hero_bg,svg.pulse{
   position: absolute;
   /* z-index: 1; */
 }
 
 svg.pulse{
-  top: 20%;
+  top: -90px;
   left: 0;
   right: 0;
   margin: 0 auto;
@@ -595,7 +595,7 @@ header{
 
 
 
-.heart-rate svg {
+.heart-rate svg.hero_bg {
   width: 100%;
   height: 100%;
 }

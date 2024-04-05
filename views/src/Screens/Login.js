@@ -27,31 +27,12 @@ const Login = () => {
   
 
 
-        <svg className="pulse" version="1.2" height="220" width="370" xmlns="http://www.w3.org/2000/svg" viewport="0 0 60 60">
-        
-        
-            <path  stroke="#4dd7ce" fill="none"strokeWidth="1"strokeLinejoin="round"
-                  d="
-                    M0,90L150,90M150,90Q158,60 162,87T167,95 170,88 173,92t6,35 7,-60T190,127 197,107s2,-11 10,-10 1,1 8,-10T219,95c6,4 8,-6 10,-17s2,10 9,11h110
-                    " 
-                  /> 
-            <path  id="longbeat" style={{ stroke: "#4dd7ce", fill: "none", strokeWidth: 1, strokeLinejoin: "round" }}
-                  d="
-                    M0,90L150,90M150,90Q158,60 162,87T167,95 170,88 173,92t6,35 7,-60T190,127 197,107s2,-11 10,-10 1,1 8,-10T219,95c6,4 8,-6 10,-17s2,10 9,11h110
-                    " 
-                  /> 
-              <rect x="-3" y="-4" height="8" width="6" rx="20" ry="20"fill="red">
-              <animateMotion dur="2s" repeatCount="indefinite">
-          <mpath href="#longbeat"/>
-        </animateMotion>
-            
-          </rect>               
-        </svg>
+       
            
         
 
         <div className="heart-rate" style={{ width: '100vw', height: '100vh' }}>
-            <svg
+            <svg className='hero_bg'
                 version="1.0"
                 xmlns="http://www.w3.org/2000/svg"
                 xmlnsXlink="http://www.w3.org/1999/xlink"
@@ -80,6 +61,29 @@ const Login = () => {
 
 
             <div className="wrapper">
+
+
+            <svg className="pulse" version="1.2" height="220" width="370" xmlns="http://www.w3.org/2000/svg" viewport="0 0 60 60">
+        
+        
+        <path  stroke="#4dd7ce" fill="none"strokeWidth="1"strokeLinejoin="round"
+              d="
+                M0,90L150,90M150,90Q158,60 162,87T167,95 170,88 173,92t6,35 7,-60T190,127 197,107s2,-11 10,-10 1,1 8,-10T219,95c6,4 8,-6 10,-17s2,10 9,11h110
+                " 
+              /> 
+        <path  id="longbeat" style={{ stroke: "#4dd7ce", fill: "none", strokeWidth: 1, strokeLinejoin: "round" }}
+              d="
+                M0,90L150,90M150,90Q158,60 162,87T167,95 170,88 173,92t6,35 7,-60T190,127 197,107s2,-11 10,-10 1,1 8,-10T219,95c6,4 8,-6 10,-17s2,10 9,11h110
+                " 
+              /> 
+          <rect x="-3" y="-4" height="8" width="6" rx="20" ry="20"fill="red">
+          <animateMotion dur="2s" repeatCount="indefinite">
+      <mpath href="#longbeat"/>
+    </animateMotion>
+        
+      </rect>               
+    </svg>
+
                 <div className="form-wrapper sign-in">
                     <form onSubmit={handleSignIn}>
                         <h2>Sign In</h2>
