@@ -27,7 +27,7 @@ const Login = () => {
   
 
 
-        <svg class="pulse" version="1.2" height="220" width="370" xmlns="http://www.w3.org/2000/svg" viewport="0 0 60 60">
+        <svg className="pulse" version="1.2" height="220" width="370" xmlns="http://www.w3.org/2000/svg" viewport="0 0 60 60">
         
         
             <path  stroke="#4dd7ce" fill="none"strokeWidth="1"strokeLinejoin="round"

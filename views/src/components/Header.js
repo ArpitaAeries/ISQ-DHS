@@ -1,6 +1,7 @@
 // components/Header.js
 import React from 'react';
 import logo from '../assets/blue-logo.svg'
+import { Link } from 'react-router-dom';
 const Header = () => {
   const logoUrl = 'YourLogo.png';
   const username = 'Guest'; 
@@ -17,6 +18,9 @@ const Header = () => {
       </div>
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <span style={{ marginRight: '10px',fontWeight:'bold' }}>{username}</span>
+        <span>
+          <Link to='/' className='btn'>Logout</Link>
+        </span>
      </div>
     </header>
   );

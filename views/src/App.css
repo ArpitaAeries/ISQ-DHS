@@ -351,7 +351,39 @@ svg.pulse{
   /* left: 50%;
    transform: translate(-50%,50%); */
 }
+.custom-datepicker {
+  position: relative;
+  display: inline-block;
+}
 
+.custom-datepicker-input {
+  /* padding: 5px 30px 5px 10px; */
+  /* border: 1px solid #ccc; */
+  /* border-radius: 4px; */
+}
+.btn {
+  text-decoration: none;
+  color: #F06B4A;
+  display: inline-block;
+  margin-left: 15px;
+}
+.custom-calendar-icon {
+  width: 15px;
+  position: absolute;
+  top: 48px;
+  right: 15px;
+  /* transform: translateY(-50%); */
+  pointer-events: none;
+  height: 15px;
+  cursor: pointer;
+}
+.custom-calendar-icon svg{
+  width: 15px;
+}
+/* Adjustments for text indentation */
+.custom-datepicker input[type="text"] {
+  text-indent: 10px; /* Adjust indentation as needed */
+}
 
 .dh_logo{
   width: 100%;
@@ -389,7 +421,7 @@ header{
 .formControl label{
   color: #4dd7ce;
   display: inline-block;
-  margin-bottom: 0.1rem;
+  margin-bottom: 1rem;
   height: auto;
 }
 
