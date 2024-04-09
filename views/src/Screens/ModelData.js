@@ -18,7 +18,7 @@ const style = {
   p: 4,
 };
 //const categories = ['eS One DevOps', 'Perform Platform', 'eS One Product Owner', 'Gemini','Corporate InfoSec'];
-const productTypes = ['Perform Platform','eS One DevOps','eS One Product Owner','Gemini','Perform','eS One Offshore','Corporate InfoSec'];
+const productTypes = ['Perform Platform','eS One','Gemini','Perform','Corporate InfoSec'];
 const datastewards=['Tom Gregory','Jason Lee','Joe Gallagher','Garrett Dunne','James Power','Somsuvra Mukherjee','Chris Mielke','Jason','Jim Power','Jose']
 
 function ModelData() {
@@ -291,7 +291,7 @@ function ModelData() {
               ))}
             </select>
           </div>
-          <div className='formControl'>
+          {/* <div className='formControl'>
            <label>Data Steward</label>
             <select value={formValue.dataSteward} onChange={(e)=>setFormValue({...formValue,dataSteward:e.target.value})}>
             <option value={null}>Select</option>
@@ -299,7 +299,7 @@ function ModelData() {
               <option key={index} value={item}>{item}</option>
               ))}
             </select>
-          </div>
+          </div> */}
           {/* <div className='formControl'>
             <input type='file' onChange={(e)=>hangleFile(e)}/>
           </div> */}
