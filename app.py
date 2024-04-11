@@ -337,8 +337,8 @@ def process_excel():
             # dataSteward = row['DataSteward']
             # date = row['date']
 
-            if isinstance(date, datetime):
-                date = date.strftime('%Y-%m-%d')
+            # if isinstance(date, datetime):
+            #     date = date.strftime('%Y-%m-%d')
 
             context = get_context(question, top_k=1)
             results = extract_answer(question, context)
