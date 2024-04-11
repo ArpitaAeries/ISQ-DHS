@@ -155,7 +155,7 @@ function ModelData() {
       setPopUpData({...val,qy:qy})
     }
 
-    const modify=()=>{
+    const modify=async()=>{
       const today = new Date();
       const month = today.getMonth() + 1;
       const quarter = Math.ceil(month / 3);
@@ -174,15 +174,15 @@ function ModelData() {
           body: JSON.stringify(parm)
         };
         
-        fetch(basePath+"update_record", requestOptions)
+        await fetch(basePath+"update_record", requestOptions)
           .then((response) => response.json())
           .then(async(res) => {
             // const updatedData =  data.map(item => 
             //   item.Questions === popUpData.Questions ? { ...item, isAccepted: true } : item
             // );
             // setData(updatedData);
-            window.location.reload()
-            //await loadData()
+            // window.location.reload()
+            await loadData()
             alert('Answer Modified')
             //loadAfterUpdate()
             handleClose()
