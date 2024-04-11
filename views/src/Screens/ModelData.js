@@ -348,7 +348,7 @@ function ModelData() {
             <th>Question</th>
             <th>Answer</th>
             <th>Product Type</th>
-            <th>Data Steward</th>
+            {/* <th>Data Steward</th> */}
             <th>Date</th>
             {/* <th>Verified On</th> */}
             <th>Modify</th>
@@ -362,7 +362,7 @@ function ModelData() {
                 {/* <td dangerouslySetInnerHTML={{ __html: extractLatestQuarterYear(item) }} /> */}
                 <td>{item.answer}</td>
                 <td>{item.productType}</td>
-                <td>{item.dataSteward}</td>
+                {/* <td>{item.dataSteward}</td> */}
                 {/* <td>{item.date}</td> */}
                 <td>{item.verifiedON}</td>
                 <td><button onClick={()=>openPopUp(item)}>Modify</button></td>
