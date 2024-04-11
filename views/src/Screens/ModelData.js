@@ -17,12 +17,13 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
+const productTypes = ['eS One'];
 //const categories = ['eS One DevOps', 'Perform Platform', 'eS One Product Owner', 'Gemini','Corporate InfoSec'];
-const productTypes = ['Perform Platform','eS One','Gemini','Perform','Corporate InfoSec'];
+//const productTypes = ['Perform Platform','eS One','Gemini','Perform','Corporate InfoSec'];
 const datastewards=['Tom Gregory','Jason Lee','Joe Gallagher','Garrett Dunne','James Power','Somsuvra Mukherjee','Chris Mielke','Jason','Jim Power','Jose']
 
 function ModelData() {
-  let [formValue,setFormValue]=useState({startDate:'',endDate:'',productType:null,dataSteward:null})
+  let [formValue,setFormValue]=useState({startDate:'',endDate:'',productType:'eS One',dataSteward:null})
   let [data,setData]=useState([])
   let [filteredData,setFilteredData]=useState(false)
   let [categories,setCategories]=useState([])
@@ -41,7 +42,7 @@ function ModelData() {
       return
     }
     const filtered = data.filter(item => {
-      const itemDate = new Date(item.date);
+      const itemDate = new Date(item.verifiedON);
       const startDateObj = startDate ? new Date(startDate) : null;
       const endDateObj = endDate ? new Date(endDate) : null;
 
@@ -124,7 +125,7 @@ function ModelData() {
       const sixMonthsAgo = new Date(currentDate);
       sixMonthsAgo.setMonth(currentDate.getMonth() - 6);
       const filtered = res.data.filter(item => {
-        const itemDate = new Date(item.date);
+        const itemDate = new Date(item.verifiedON);
         return itemDate >= sixMonthsAgo;
       });
       setCategories(res?.data.map((item)=>item.productType))
@@ -349,7 +350,7 @@ function ModelData() {
             <th>Product Type</th>
             <th>Data Steward</th>
             <th>Date</th>
-            <th>Verified On</th>
+            {/* <th>Verified On</th> */}
             <th>Modify</th>
             {/* <th>Action</th> */}
           </tr>
@@ -362,7 +363,7 @@ function ModelData() {
                 <td>{item.answer}</td>
                 <td>{item.productType}</td>
                 <td>{item.dataSteward}</td>
-                <td>{item.date}</td>
+                {/* <td>{item.date}</td> */}
                 <td>{item.verifiedON}</td>
                 <td><button onClick={()=>openPopUp(item)}>Modify</button></td>
               </tr>

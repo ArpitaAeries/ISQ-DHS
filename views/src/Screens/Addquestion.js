@@ -6,7 +6,7 @@ import Grid from '@mui/material/Grid';
 import Chip from '@mui/material/Chip';
 const Addquestion = ({question,productType,datastewardprop}) => {
   const [questionValue, setQuestionValue] = useState([]);
-  const [categoryValue, setCategoryValue] = useState([]);
+  const [categoryValue, setCategoryValue] = useState(['eS One']);
   const [datasteward, setDatasteward] = useState([]);
 
   const questions = ['Does the vendor maintain any formal security policies &  How often is the vendor’s security posture reviewed?', 
@@ -14,8 +14,8 @@ const Addquestion = ({question,productType,datastewardprop}) => {
    'Are there current connections or servers that will need decommissioning once your new environment has moved to full production?',
   'If cloud solution, does the vendor use a third-party storage solution?If yes, does the data storage vendor have any third- party certifications or attestations, such as FedRamp, FIPS 140 -2,FISMA and DIACAP, HIPAA, ISO 27001, PCI-DSS, TRUSTe or SOC 1/SOC 2/ SSAE 16/ISAE 3402? If yes, provide certification or attestations'];
   
-  
-  const productTypes = ['Perform Platform','eS One','Gemini','Perform','Corporate InfoSec'];
+  const productTypes = ['eS One'];
+  // const productTypes = ['Perform Platform','eS One','Gemini','Perform','Corporate InfoSec'];
   const datastewards=['Tom Gregory','Jason Lee','Joe Gallagher','Garrett Dunne','James Power','Somsuvra Mukherjee','Chris Mielke','Jason','Jim Power','Jose']
 
   const handleApiCall = () => {
@@ -26,7 +26,7 @@ const Addquestion = ({question,productType,datastewardprop}) => {
 
   return (
     <div className='formControls'>
-      <div className='formControl'>
+      <div className='formControl' style={{width:'65%'}}>
         <input
          type='text'
           placeholder='Question *'
@@ -58,15 +58,7 @@ const Addquestion = ({question,productType,datastewardprop}) => {
             ))}
           </select>
       </div>
-      <div className='formControl'>
-        {/* <input type='text'
-         placeholder='Data Steward *'
-         value={datasteward}
-          onChange={(e) =>{
-            setDatasteward(e.target.value)
-            datastewardprop(e.target.value)
-          }}
-         />  */}
+      {/* <div className='formControl'>
          <select value={datasteward}
           onChange={(e) =>{
             setDatasteward(e.target.value)
@@ -77,7 +69,7 @@ const Addquestion = ({question,productType,datastewardprop}) => {
               <option value={item} key={index}>{item}</option>
             ))}
           </select>
-      </div>
+      </div> */}
     </div>
   );
 };

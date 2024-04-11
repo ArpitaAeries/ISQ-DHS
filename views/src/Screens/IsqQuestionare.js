@@ -14,7 +14,7 @@ function IsqQuestionare() {
   let [formValue,setFormValue]=useState({quarter:'Q1',year:'2023',file:null,type:'Single',startDate:null})
   let [loader,setLoader]=useState(false)
   let [question,setQuestion]=useState(null)
-  let [category,setCategory]=useState(null)
+  let [category,setCategory]=useState('eS One')
   let [dataSteward,setDataSteward]=useState(null)
 
 
@@ -55,7 +55,7 @@ function IsqQuestionare() {
         .catch((error) => {console.error(error)  
           setLoader(false)});
     }else{
-      if(formValue.startDate==null || question==null || category==null || dataSteward==null || question=='' || category=='' || dataSteward=='' || dataSteward=='Select Data Steward *' || category=='Select Product Type *'){
+      if(question==null || category==null || question=='' || category=='' || category=='Select Product Type *'){
           alert('Please fill all details')
           return
       }
@@ -64,7 +64,7 @@ function IsqQuestionare() {
       let data={
         "Question":question,
         "productType":category,
-        "date":formValue.startDate,
+        // "date":formValue.startDate,
         "dataSteward":dataSteward
       }
       const requestOptions = {
@@ -122,25 +122,25 @@ function IsqQuestionare() {
   }
   
 
-  const onReject=(arg)=>{
+  const onReject=async(arg)=>{
     const url = basePath+'reject_record';
 
     const parm = {
-      "question":arg.Questions
+      "question":arg.question
     };
 
-    fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(parm)
-    })
+      await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(parm)
+      })
       .then(response => response.json())
       .then(res => {
         console.log('Success:', res);
         const updatedData = data.map(item => 
-          item.Questions === arg.Questions ? { ...item, isAccepted: false } : item
+          item.question === arg.question ? { ...item, isAccepted: false } : item
         );
         setData(updatedData);
         alert('Record rejected successfully')
@@ -149,6 +149,11 @@ function IsqQuestionare() {
         console.error('Error:', error);
       });
 
+
+      const updatedData = data.filter(item => 
+        item.question !== arg.question
+      );
+      setData(updatedData);
   }
 
   const handleQuestion=(val)=>{
@@ -179,7 +184,7 @@ function IsqQuestionare() {
           </div>
 
 
-          {formValue.type!=='Bulk' &&
+          {/* {formValue.type!=='Bulk' &&
           <div className='formControl custom-datepicker'>
             <label>Select Date*</label>
           <input 
@@ -195,7 +200,7 @@ function IsqQuestionare() {
     </svg>
   </div>
           </div>
-          }
+          } */}
           
           {/* <div className='formControl'>
             <label>Select Quarter</label>
@@ -216,7 +221,7 @@ function IsqQuestionare() {
             </select>
           </div> */}
           {formValue.type=='Bulk' ?
-          <div className='formControl'>
+          <div className='formControl' style={{marginTop: '30px'}}>
             <input type='file' onChange={(e)=>hangleFile(e)}/>
           </div>:
            <Addquestion question={handleQuestion} productType={handleProductType} datastewardprop={handleDatastewardprop}/>
@@ -236,9 +241,9 @@ function IsqQuestionare() {
             {/* <th>Answer</th> */}
           
             <th>Answer</th>
-            <th>Date</th>
+            {/* <th>Date</th> */}
             <th>Product Type</th>
-            <th>Data Steward</th>
+            {/* <th>Data Steward</th> */}
             <th>Action</th>
           </tr>
           {
@@ -248,14 +253,16 @@ function IsqQuestionare() {
                 {/* <td>{item?.answer[0]?.answer}</td> */}
               
                 <td>{item?.context}</td>
-                <td>{item?.date}</td>
+                {/* <td>{item?.date}</td> */}
                 <td>{item?.productType}</td>
-                <td>{item?.dataSteward}</td>
+                {/* <td>{item?.dataSteward}</td> */}
                 <td>
-                  {item.isAccepted?
-                    <button onClick={()=>onReject(item)}>Reject</button>:
+                  {/* {item.isAccepted? */}
+                    <div style={{display:'flex',gap:'5px'}}>
+                    <button onClick={()=>onReject(item)}>Reject</button>
                     <button onClick={()=>onAccept(item)}>Accept</button>
-                  }
+                    </div>
+                  {/* } */}
                 </td>
               </tr>
             ))
