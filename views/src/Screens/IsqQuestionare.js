@@ -182,44 +182,6 @@ function IsqQuestionare() {
               <option value={'Bulk'}>Bulk</option>
             </select>
           </div>
-
-
-          {/* {formValue.type!=='Bulk' &&
-          <div className='formControl custom-datepicker'>
-            <label>Select Date*</label>
-          <input 
-          className="custom-datepicker-input"
-          type='date' value={formValue.startDate} onChange={(e)=>setFormValue({...formValue,startDate:e.target.value})} />
-          <div className="custom-calendar-icon">
-
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#4dd7ce" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
-      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-      <line x1="16" y1="2" x2="16" y2="6"></line>
-      <line x1="8" y1="2" x2="8" y2="6"></line>
-      <line x1="3" y1="10" x2="21" y2="10"></line>
-    </svg>
-  </div>
-          </div>
-          } */}
-          
-          {/* <div className='formControl'>
-            <label>Select Quarter</label>
-            <select value={formValue.quarter} onChange={(e)=>setFormValue({...formValue,quarter:e.target.value})}>
-              <option value={'Q1'}>Q1</option>
-              <option value={'Q2'}>Q2</option>
-              <option value={'Q3'}>Q3</option>
-              <option value={'Q4'}>Q4</option>
-            </select>
-          </div>
-          <div className='formControl'>
-          <label>Select Year</label>
-            <select value={formValue.year} onChange={(e)=>setFormValue({...formValue,year:e.target.value})}>
-              <option value={'2024'}>2024</option>
-              <option value={'2023'}>2023</option>
-              <option value={'2022'}>2022</option>
-              <option value={'2021'}>2021</option>
-            </select>
-          </div> */}
           {formValue.type=='Bulk' ?
           <div className='formControl' style={{marginTop: '30px'}}>
             <input type='file' onChange={(e)=>hangleFile(e)}/>

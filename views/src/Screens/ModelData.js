@@ -17,7 +17,7 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
-const productTypes = ['eS One'];
+const productTypes = ['eS One','Gemini', 'AI', 'Perform Platform'];
 //const categories = ['eS One DevOps', 'Perform Platform', 'eS One Product Owner', 'Gemini','Corporate InfoSec'];
 //const productTypes = ['Perform Platform','eS One','Gemini','Perform','Corporate InfoSec'];
 const datastewards=['Tom Gregory','Jason Lee','Joe Gallagher','Garrett Dunne','James Power','Somsuvra Mukherjee','Chris Mielke','Jason','Jim Power','Jose']
