@@ -367,6 +367,46 @@ def get_custom_answer():
     except Exception as e:
         return jsonify({'error': f'Error updating record: {str(e)}'})
 
+@app.route('/bulk_accept', methods=['POST'])
+def bulk_accept():
+    try:
+        data = request.get_json()
+        for record in data:
+            question = record.get('Question')
+            quarter = record.get('quarter')
+            year = record.get('year')
+            answer = record.get('answer')
+            productType = record.get('productType')
+            date = record.get('date')
+            dataSteward = record.get('dataSteward')
+
+            new_column = quarter + year
+            existing_document = db.isqQuestions.find_one({'Question': question})
+
+            if existing_document:
+                db.isqQuestions.update_one(
+                    {'Question': question},
+                    {'$set': {new_column: answer, 'answer': answer, 'verifiedON': datetime.now().strftime('%Y-%m-%d'), 'date': date, 'dataSteward': dataSteward}}
+                )
+            else:
+                db.isqQuestions.insert_one({'Question': question, 'answer': answer, new_column: answer, 'productType': productType, 'verifiedON': datetime.now().strftime('%Y-%m-%d'), 'date': date, 'dataSteward': dataSteward})
+        
+        return jsonify({'message': 'All documents processed successfully'})
+    except Exception as e:
+        return jsonify({'error': f'Error processing data: {str(e)}'})
+
+@app.route('/bulk_reject', methods=['POST'])
+def bulk_reject():
+    try:
+        data = request.get_json()
+        for record in data:
+            question = record.get('question')
+            db.isqQuestions.delete_one({'Question': question})
+        
+        return jsonify({'message': 'All documents rejected successfully'})
+    except Exception as e:
+        return jsonify({'error': f'Error rejecting records: {str(e)}'})
+    
 
 if __name__ == '__main__':
     try:

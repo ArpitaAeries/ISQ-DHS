@@ -434,9 +434,9 @@ header{
   justify-content: center;
 }
 .w-100 button{
-  max-width: 350px;
+  max-width: 225px;
   margin-top: 2rem;
-  /* margin-right: 2rem; */
+  margin-right: 2rem;
   box-sizing: border-box;
   
 }
@@ -637,3 +637,7 @@ header{
   margin: 0 auto;
   padding: 0;
   position: relative; }
+.css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root.Mui-checked,
+ .css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root.MuiCheckbox-indeterminate {
+  color:#4dd7ce !important;
+  }
