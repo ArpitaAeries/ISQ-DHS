@@ -14,7 +14,7 @@ const Addquestion = ({question,productType,datastewardprop}) => {
    'Are there current connections or servers that will need decommissioning once your new environment has moved to full production?',
   'If cloud solution, does the vendor use a third-party storage solution?If yes, does the data storage vendor have any third- party certifications or attestations, such as FedRamp, FIPS 140 -2,FISMA and DIACAP, HIPAA, ISO 27001, PCI-DSS, TRUSTe or SOC 1/SOC 2/ SSAE 16/ISAE 3402? If yes, provide certification or attestations'];
   
-  const productTypes = ['eS One'];
+  const productTypes = ['eS One','Gemini', 'AI', 'Perform Platform'];
   // const productTypes = ['Perform Platform','eS One','Gemini','Perform','Corporate InfoSec'];
   const datastewards=['Tom Gregory','Jason Lee','Joe Gallagher','Garrett Dunne','James Power','Somsuvra Mukherjee','Chris Mielke','Jason','Jim Power','Jose']
 

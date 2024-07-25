@@ -345,6 +345,15 @@ def process_excel():
             result.append({"question": question, "answer": results, "context": context, "productType": product
                         #    , "dataSteward": dataSteward, "date": date
                            })
+            # existing_document = db.isqQuestions.find_one({'Question': question})
+            # if existing_document:
+            #     db.isqQuestions.update_one(
+            #         {'Question': question},
+            #         {'$set': {"Question": question,"answer": results, "context": context, "productType": product,'verifiedON': datetime.now().strftime('%Y-%m-%d')}}
+            #     )
+            #     return jsonify({'message': f'Document with question " {question}" updated successfully'})
+            # else:
+            #     db.isqQuestions.insert_one( {"Question": question,"answer": results, "context": context, "productType": product,'verifiedON': datetime.now().strftime('%Y-%m-%d')})
 
         return jsonify({"result": result})
 

@@ -5,6 +5,8 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import Header from '../components/Header';
 import SideMenu from '../components/SideMenu';
+import * as XLSX from 'xlsx';
+
 let basePath="https://llmusecases.aeriestechnology.com/isqapi/"
 
 const style = {
@@ -246,6 +248,20 @@ function ModelData() {
       );
       setNew1FilteredData(filtered);
     }
+
+    const handleDownload = () => {
+      const extractedData = data.map(item => ({
+        Question: item.Question,
+        Answer: typeof item.answer=='object'?item.answer[0]:item.answer,
+        ProductType: item.productType,
+        VerifiedON: item.verifiedON,
+      }));
+      
+      const worksheet = XLSX.utils.json_to_sheet(extractedData);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+      XLSX.writeFile(workbook, "report.xlsx");
+    };
   return (
     <>
     <Header/>
@@ -306,7 +322,8 @@ function ModelData() {
           </div> */}
           <div className='text-center w-100'>
             <button type='submit' className='mr-5'>Filter</button>
-            <button type='button' onClick={()=>setNewFilteredData(data)}>Reset</button>
+            <button type='button' onClick={()=>setNewFilteredData(data)} className='mr-5'>Reset</button>
+            <button type='button' onClick={()=>handleDownload()}>Download As Excel</button>
           </div>
         </div>
        </div>
@@ -344,16 +361,19 @@ function ModelData() {
           <input type="text" placeholder="Search by question" onChange={(e) => handleSearch(e.target.value)} style={{maxWidth:'300px',float:'right'}}/>
         </div>
         <table>
-          <tr>
-            <th>Question</th>
-            <th>Answer</th>
-            <th>Product Type</th>
-            {/* <th>Data Steward</th> */}
-            <th>Date</th>
-            {/* <th>Verified On</th> */}
-            <th>Modify</th>
-            {/* <th>Action</th> */}
-          </tr>
+          <thead>
+            <tr>
+              <th>Question</th>
+              <th>Answer</th>
+              <th>Product Type</th>
+              {/* <th>Data Steward</th> */}
+              <th>Date</th>
+              {/* <th>Verified On</th> */}
+              <th>Modify</th>
+              {/* <th>Action</th> */}
+            </tr>
+          </thead>
+          <tbody>
           { newfilteredData &&
             newfilteredData?.map((item,index)=>(
               <tr key={index}>
@@ -369,7 +389,8 @@ function ModelData() {
               </tr>
             ))
           }
-           { newfilteredData.length==0 && <tr><td colSpan={7}>No Data Found</td></tr>}
+           { newfilteredData.length===0 && <tr><td colSpan={5}>No Data Found</td></tr>}
+           </tbody>
         </table>
         </>
         {/* } */}

@@ -296,8 +296,8 @@ function IsqQuestionare() {
               <div className='text-center w-100'>
                 <button type='submit'>Submit</button>
                 {formValue.type === 'Bulk' && <a className='downloadButton' download href={sample}>Download Sample</a>}
-                {formValue.type === 'Bulk' &&<button type='button' onClick={bulkAccept}>Accept</button>}
-                {formValue.type === 'Bulk' &&<button type='button' onClick={bulkReject}>Reject</button>}
+                {formValue.type === 'Bulk' &&<button type='button' onClick={bulkAccept}>Bulk Accept</button>}
+                {formValue.type === 'Bulk' &&<button type='button' onClick={bulkReject}>Bulk Reject</button>}
               </div>
             </div>
           </form>
